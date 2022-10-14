@@ -1,0 +1,5 @@
+﻿1. Set ProcurementTracker.WebAPI as Startup project.
+2. Update the ConnectionString in appsettings.json which is in ProcurementTracker.WebAPI according to your MSSQL database server.
+3. Change the default project with ProcurementTracker.WebAPI.
+4. Run Update-Database command using package manager console.
+5. Update-Database -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
