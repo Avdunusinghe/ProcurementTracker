@@ -31,8 +31,6 @@
     <Folder Include="Data\Configurations\" />
     <Folder Include="DataUpdateScripts\" />
     <Folder Include="MigrationsScripts\" />
-    <Folder Include="Repositories\Command\Base\" />
-    <Folder Include="Repositories\Query\Base\" />
   </ItemGroup>
 
   <ItemGroup>
