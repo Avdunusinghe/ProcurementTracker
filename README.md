@@ -1,5 +1,5 @@
 # ProcurementTracker
-.Net 6 WebAPI | Entity Framework Core | Microservices | Microsoft SQL | Code First Approach | Clean Architecture | C# | JavaScript | Dart | CQRS | Mediator Pattern | Repository Design Pattern | React | Flutte
+.Net 6 WebAPI | Entity Framework Core | Microservices | Microsoft SQL | Code First Approach | Clean Architecture | C# | JavaScript | Dart | CQRS | Mediator Pattern | Repository Design Pattern | React | Flutter
 
 
 ## Technologies
