@@ -10,7 +10,7 @@ namespace ProcurementTracker.Infrastructure.Data
 {
     public class ProcurementTrackerContext : DbContext, IProcurementTrackerContext
     {
-        public ProcurementTrackerContext()
+        public ProcurementTrackerContext(DbContextOptions<ProcurementTrackerContext> options) : base(options)
         {
 
         }
