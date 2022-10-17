@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Configurations\" />
     <Folder Include="DataUpdateScripts\" />
     <Folder Include="MigrationsScripts\" />
   </ItemGroup>

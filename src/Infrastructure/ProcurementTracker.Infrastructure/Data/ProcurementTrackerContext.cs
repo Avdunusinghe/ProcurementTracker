@@ -1,8 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using ProcurementTracker.Application.Common.Interfaces;
+using ProcurementTracker.Domain.Entities;
+using ProcurementTracker.Infrastructure.Interceptors;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,29 +15,90 @@ namespace ProcurementTracker.Infrastructure.Data
 {
     public class ProcurementTrackerContext : DbContext, IProcurementTrackerContext
     {
-        public ProcurementTrackerContext(DbContextOptions<ProcurementTrackerContext> options) : base(options)
+        private readonly AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor;
+        private IDbContextTransaction dbContextTransaction;
+        public ProcurementTrackerContext(DbContextOptions<ProcurementTrackerContext> options,
+             AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
         {
-
+            this.auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
         }
 
-        public Task BeginTransactionAsync(CancellationToken cancellationToken)
+        public DbSet<User> Users => Set<User>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.LogTo(message => Debug.WriteLine(message))
+                .EnableSensitiveDataLogging();
+            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.AddInterceptors(auditableEntitySaveChangesInterceptor);
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
         }
 
-        public Task CommitTransactionAsync(CancellationToken cancellationToken)
+        public async Task BeginTransactionAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            dbContextTransaction ??= await Database.BeginTransactionAsync(cancellationToken);
         }
 
-        public Task RetryOnExceptionAsync(Func<Task> func)
+        public async Task CommitTransactionAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await SaveChangesAsync(cancellationToken);
+                dbContextTransaction?.CommitAsync(cancellationToken);
+            }
+            catch
+            {
+                await RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+            finally
+            {
+                if (dbContextTransaction != null)
+                {
+                    DisposeTransaction();
+                }
+            }
         }
 
-        public Task RollbackTransactionAsync(CancellationToken cancellationToken)
+        public async Task RetryOnExceptionAsync(Func<Task> func)
         {
-            throw new NotImplementedException();
+            await Database.CreateExecutionStrategy().ExecuteAsync(func);
+        }
+
+        public async Task RollbackTransactionAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await dbContextTransaction?.RollbackAsync(cancellationToken);
+            }
+            finally
+            {
+                DisposeTransaction();
+            }
+        }
+
+        private void DisposeTransaction()
+        {
+            try
+            {
+                if (dbContextTransaction != null)
+                {
+                    dbContextTransaction.Dispose();
+                    dbContextTransaction = null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }
