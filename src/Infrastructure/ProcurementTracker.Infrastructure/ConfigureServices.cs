@@ -9,11 +9,6 @@ using ProcurementTracker.Infrastructure.Interceptors;
 using ProcurementTracker.Infrastructure.Repositories.Command.Base;
 using ProcurementTracker.Infrastructure.Repositories.Query.Base;
 using ProcurementTracker.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcurementTracker.Infrastructure
 {
