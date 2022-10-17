@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ProcurementTracker.Application.Common.Interfaces;
 using ProcurementTracker.Infrastructure.Data;
+using ProcurementTracker.WebAPI.Services;
 using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -12,6 +14,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddWebAPIServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
             services.AddHealthChecks()
                 .AddDbContextCheck<ProcurementTrackerContext>();
