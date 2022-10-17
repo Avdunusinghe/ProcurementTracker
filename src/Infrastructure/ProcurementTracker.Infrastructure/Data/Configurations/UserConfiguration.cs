@@ -13,7 +13,7 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("users");
+            builder.ToTable("Users");
             builder.HasKey(t => t.Id);
 
             builder

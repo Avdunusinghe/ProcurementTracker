@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProcurementTracker.WebAPI.Controllers
@@ -18,6 +19,7 @@ namespace ProcurementTracker.WebAPI.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

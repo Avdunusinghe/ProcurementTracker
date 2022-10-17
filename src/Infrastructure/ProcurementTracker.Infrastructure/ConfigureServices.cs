@@ -8,6 +8,7 @@ using ProcurementTracker.Infrastructure.Data;
 using ProcurementTracker.Infrastructure.Interceptors;
 using ProcurementTracker.Infrastructure.Repositories.Command.Base;
 using ProcurementTracker.Infrastructure.Repositories.Query.Base;
+using ProcurementTracker.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,11 @@ namespace ProcurementTracker.Infrastructure
 
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
+
+
+
+
+            services.AddTransient<IDateTime, DateTimeService>();
 
             return services;
         }
