@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProcurementTracker.Domain.Entities
 {
-    public class OrderItems : BaseEntity
+    public class PurchaseRequest :BaseAuditableEntity
     {
     }
 }

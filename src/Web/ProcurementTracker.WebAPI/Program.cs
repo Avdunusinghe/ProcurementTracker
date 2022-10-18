@@ -18,7 +18,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
