@@ -17,7 +17,18 @@ namespace ProcurementTracker.Domain.Entities
         public DateTime? LastLoggedOn { get; set; }
 
         public virtual Role Role { get; set; }
+
         public virtual ICollection<User> CreatedUsers { get; set; }
         public virtual ICollection<User> UpdatedUsers { get; set; }
+
+        #region Navigation Property Product
+        public virtual ICollection<Product> CreatedProducts { get; set; }
+        public virtual ICollection<Product> UpdatedProducts { get; set; }
+
+        #endregion
+
+        #region Navigation Property Orders
+        public virtual ICollection<Order> PlaceOders { get; set; }
+        #endregion
     }
 }

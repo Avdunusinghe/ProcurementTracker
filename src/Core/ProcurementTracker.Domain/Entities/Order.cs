@@ -11,6 +11,7 @@ namespace ProcurementTracker.Domain.Entities
         public string ReferenceId { get; set; }
         public decimal TotalPrice { get; set; }
         public string ShippingAddress { get; set; }
+        public OrderStatus OrderStatus { get; set; }
         public DateTime ShippingDate { get; set; }
         public DateTime DateTime { get; set; }
         public bool IsProceesed { get; set; }

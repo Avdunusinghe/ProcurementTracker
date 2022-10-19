@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ProcurementTracker.Domain.Entities
 {
-    public class ProductImages : BaseEntity
+    public class ProductImage : BaseEntity
     {
-
-        public int ProductId { get; set; }
         public string Attachment { get; set; }
         public string AttachementName { get; set; }
 
+        public int ProductId { get; set; }
         public virtual Product Product { get; set; }
     }
 }
