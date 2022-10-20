@@ -14,6 +14,6 @@ namespace ProcurementTracker.Domain.Entities
         public string MobileNumber { get; set; }
 
         public ICollection<Product> Products { get; set; }
-
+        public ICollection<PurchaseRequest> purchaseRequests { get; set; }
     }
 }

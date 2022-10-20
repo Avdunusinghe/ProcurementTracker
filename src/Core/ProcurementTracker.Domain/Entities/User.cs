@@ -24,11 +24,23 @@ namespace ProcurementTracker.Domain.Entities
         #region Navigation Property Product
         public virtual ICollection<Product> CreatedProducts { get; set; }
         public virtual ICollection<Product> UpdatedProducts { get; set; }
-
         #endregion
 
         #region Navigation Property Orders
+        public virtual ICollection<Order> CreatedOrders { get; set; }
+        public virtual ICollection<Order> UpdatedOrders { get; set; }
         public virtual ICollection<Order> PlaceOders { get; set; }
+        #endregion
+
+        #region Navigation Property PurchaseRequest
+        public virtual ICollection<PurchaseRequest> CreatedPurchaseRequests { get; set; }
+        public virtual ICollection<PurchaseRequest> UpdatedPurchaseRequests { get; set; }
+        public virtual ICollection<PurchaseRequest> StatusChangedPurchaseRequests { get; set; }
+        #endregion
+
+        #region Navigation Property  Supplier
+        public virtual ICollection<Supplier> CreatedSuppliers { get; set; }
+        public virtual ICollection<Supplier> UpdatedSuppliers { get; set; }
         #endregion
     }
 }

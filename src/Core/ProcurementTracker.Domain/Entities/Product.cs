@@ -9,8 +9,7 @@
 
         public long SupplierId { get; set; }
 
-        public virtual User CreatedBy { get; set; }
-        public virtual User UpdatedBy { get; set; }
+       
         public virtual Supplier Supplier { get; set; }
 
 

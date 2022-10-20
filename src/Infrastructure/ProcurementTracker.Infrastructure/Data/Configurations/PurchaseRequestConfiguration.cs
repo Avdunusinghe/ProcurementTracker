@@ -1,37 +1,41 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProcurementTracker.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ProcurementTracker.Infrastructure.Data.Configurations
 {
-    internal class OrderConfiguration : IEntityTypeConfiguration<Order>
+    public class PurchaseRequestConfiguration : IEntityTypeConfiguration<PurchaseRequest>
     {
-        public void Configure(EntityTypeBuilder<Order> builder)
+        public void Configure(EntityTypeBuilder<PurchaseRequest> builder)
         {
-            builder.ToTable("Order");
+            builder.ToTable("PurchaseRequest");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(t => t.TotalPrice)
-               .HasPrecision(14, 2);
-
             builder.HasOne<User>(u => u.CreatedBy)
-               .WithMany(c => c.CreatedOrders)
+               .WithMany(c => c.CreatedPurchaseRequests)
                .HasForeignKey(fk => fk.CreatedById)
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
 
             builder.HasOne<User>(u => u.LastUpdatedBy)
-               .WithMany(c => c.UpdatedOrders)
+               .WithMany(c => c.UpdatedPurchaseRequests)
                .HasForeignKey(fk => fk.LastUpdatedById)
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
 
-            builder.HasOne<User>(u => u.OrderBy)
-               .WithMany(u => u.PlaceOders)
-               .HasForeignKey(fk => fk.OrderByUserId)
+            builder.HasOne<User>(u => u.StatusChangedBy)
+               .WithMany(c => c.StatusChangedPurchaseRequests)
+               .HasForeignKey(fk => fk.LastUpdatedById)
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
+
+
         }
     }
 }
