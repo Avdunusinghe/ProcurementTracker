@@ -11,6 +11,16 @@ namespace ProcurementTracker.Application.Common.Interfaces
     public interface IProcurementTrackerContext
     {
         DbSet<User> Users { get; }
+        DbSet<Role> Roles { get; }
+        DbSet<Supplier> Suppliers { get; }
+        DbSet<Product> Products { get; }
+        DbSet<Order> Orders { get; }
+        DbSet<OrderItem> OrderItems { get; }
+        DbSet<ProductImage> ProductImages { get; }
+        DbSet<PurchaseRequest> PurchaseRequests { get; }
+        DbSet<PurchaseRequestProductItem> PurchaseRequestProductItems { get; }
+
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task BeginTransactionAsync(CancellationToken cancellationToken);
         Task CommitTransactionAsync(CancellationToken cancellationToken);

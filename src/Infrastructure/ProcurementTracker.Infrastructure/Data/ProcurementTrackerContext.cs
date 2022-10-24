@@ -25,6 +25,22 @@ namespace ProcurementTracker.Infrastructure.Data
 
         public DbSet<User> Users => Set<User>();
 
+        public DbSet<Role> Roles => Set<Role>();
+
+        public DbSet<Supplier> Suppliers => Set<Supplier>();
+
+        public DbSet<Product> Products => Set<Product>();
+
+        public DbSet<Order> Orders => Set<Order>();
+
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+
+        public DbSet<ProductImage> ProductImages => Set<ProductImage>();
+
+        public DbSet<PurchaseRequest> PurchaseRequests => Set<PurchaseRequest>();
+
+        public DbSet<PurchaseRequestProductItem> PurchaseRequestProductItems => Set<PurchaseRequestProductItem>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
