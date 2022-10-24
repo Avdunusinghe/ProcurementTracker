@@ -4,15 +4,15 @@ using ProcurementTracker.Domain.Entities;
 
 namespace ProcurementTracker.Infrastructure.Data.Configurations
 {
-    public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
+    public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<ProductImage> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable("ProductImage");
+            builder.ToTable("Role");
 
             builder.HasKey(x => x.Id);
 
-
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
         }
     }
 }
