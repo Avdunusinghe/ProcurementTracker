@@ -8,11 +8,11 @@ namespace ProcurementTracker.Application.Common.Response
 {
     public class ResultDTO
     {
-        internal ResultDTO(bool succeeded, IEnumerable<string> errors)
+        /*internal ResultDTO(bool succeeded, IEnumerable<string> errors)
         {
             Succeeded = succeeded;
             Errors = errors.ToArray();
-        }
+        }*/
 
         public bool Succeeded { get; set; }
         public bool IsSuccess { get; set; }
@@ -20,14 +20,14 @@ namespace ProcurementTracker.Application.Common.Response
 
         public string[] Errors { get; set; }
 
-        public static ResultDTO Success()
+        /*public static ResultDTO Success()
         {
-            return new ResultDTO(true, Array.Empty<string>());
+            //return new ResultDTO(true, Array.Empty<string>());
         }
 
         public static ResultDTO Failure(IEnumerable<string> errors)
         {
-            return new ResultDTO(false, errors);
-        }
+            //return new ResultDTO(false, errors);
+        }*/
     }
 }
