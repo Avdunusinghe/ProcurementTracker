@@ -41,6 +41,8 @@ namespace ProcurementTracker.Infrastructure.Data
 
         public DbSet<PurchaseRequestProductItem> PurchaseRequestProductItems => Set<PurchaseRequestProductItem>();
 
+        public DbSet<SupplierProduct> SupplierProducts => Set<SupplierProduct>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

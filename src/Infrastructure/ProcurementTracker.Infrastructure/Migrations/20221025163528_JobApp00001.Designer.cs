@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProcurementTracker.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using ProcurementTracker.Infrastructure.Data;
 namespace ProcurementTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ProcurementTrackerContext))]
-    partial class ProcurementTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20221025163528_JobApp00001")]
+    partial class JobApp00001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -562,17 +564,10 @@ namespace ProcurementTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.SupplierProduct", b =>
                 {
-                    b.HasOne("ProcurementTracker.Domain.Entities.Product", "Product")
-                        .WithMany("SupplierProducts")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ProcurementTracker.Domain.Entities.Supplier", "Supplier")
                         .WithMany("SupplierProducts")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Product");
 
                     b.Navigation("Supplier");
                 });
@@ -612,8 +607,6 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("ProductImages");
-
-                    b.Navigation("SupplierProducts");
                 });
 
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.PurchaseRequest", b =>

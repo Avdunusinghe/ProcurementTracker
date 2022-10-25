@@ -19,6 +19,7 @@ namespace ProcurementTracker.Application.Common.Interfaces
         DbSet<ProductImage> ProductImages { get; }
         DbSet<PurchaseRequest> PurchaseRequests { get; }
         DbSet<PurchaseRequestProductItem> PurchaseRequestProductItems { get; }
+        DbSet<SupplierProduct> SupplierProducts { get; }
 
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);

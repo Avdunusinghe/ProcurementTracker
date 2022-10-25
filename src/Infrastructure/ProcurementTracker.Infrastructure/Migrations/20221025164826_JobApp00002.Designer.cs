@@ -12,8 +12,8 @@ using ProcurementTracker.Infrastructure.Data;
 namespace ProcurementTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ProcurementTrackerContext))]
-    [Migration("20221024170105_JobApp00001")]
-    partial class JobApp00001
+    [Migration("20221025164826_JobApp00002")]
+    partial class JobApp00002
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,15 +183,12 @@ namespace ProcurementTracker.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("ProductId1")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductImage", (string)null);
                 });
@@ -228,8 +225,8 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.Property<long>("LastUpdatedById1")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("PurchaseRequestStatus")
                         .HasColumnType("int");
@@ -237,10 +234,7 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.Property<DateTime>("RequiredDeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("SupplierId1")
+                    b.Property<long>("SupplierId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -251,7 +245,7 @@ namespace ProcurementTracker.Infrastructure.Migrations
 
                     b.HasIndex("LastUpdatedById1");
 
-                    b.HasIndex("SupplierId1");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("PurchaseRequest", (string)null);
                 });
@@ -342,6 +336,27 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.HasIndex("LastUpdatedById");
 
                     b.ToTable("Supplier", (string)null);
+                });
+
+            modelBuilder.Entity("ProcurementTracker.Domain.Entities.SupplierProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SupplierId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("SupplierProduct", (string)null);
                 });
 
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.User", b =>
@@ -476,7 +491,7 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 {
                     b.HasOne("ProcurementTracker.Domain.Entities.Product", "Product")
                         .WithMany("ProductImages")
-                        .HasForeignKey("ProductId1")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -505,7 +520,7 @@ namespace ProcurementTracker.Infrastructure.Migrations
 
                     b.HasOne("ProcurementTracker.Domain.Entities.Supplier", "Supplier")
                         .WithMany("purchaseRequests")
-                        .HasForeignKey("SupplierId1")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -547,6 +562,23 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.Navigation("LastUpdatedBy");
                 });
 
+            modelBuilder.Entity("ProcurementTracker.Domain.Entities.SupplierProduct", b =>
+                {
+                    b.HasOne("ProcurementTracker.Domain.Entities.Product", "Product")
+                        .WithMany("SupplierProducts")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ProcurementTracker.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("SupplierProducts")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.User", b =>
                 {
                     b.HasOne("ProcurementTracker.Domain.Entities.User", "CreatedBy")
@@ -582,6 +614,8 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("ProductImages");
+
+                    b.Navigation("SupplierProducts");
                 });
 
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.PurchaseRequest", b =>
@@ -597,6 +631,8 @@ namespace ProcurementTracker.Infrastructure.Migrations
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.Supplier", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("SupplierProducts");
 
                     b.Navigation("purchaseRequests");
                 });

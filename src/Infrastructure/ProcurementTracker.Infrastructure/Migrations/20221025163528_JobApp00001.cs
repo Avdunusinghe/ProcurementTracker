@@ -186,12 +186,11 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
                     PurchaseRequestStatus = table.Column<int>(type: "int", nullable: false),
                     RequiredDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SupplierId = table.Column<int>(type: "int", nullable: false),
-                    SupplierId1 = table.Column<long>(type: "bigint", nullable: false),
+                    SupplierId = table.Column<long>(type: "bigint", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<long>(type: "bigint", nullable: false),
@@ -203,8 +202,8 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_PurchaseRequest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PurchaseRequest_Supplier_SupplierId1",
-                        column: x => x.SupplierId1,
+                        name: "FK_PurchaseRequest_Supplier_SupplierId",
+                        column: x => x.SupplierId,
                         principalTable: "Supplier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -226,6 +225,26 @@ namespace ProcurementTracker.Infrastructure.Migrations
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SupplierProduct",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    SupplierId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SupplierProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SupplierProduct_Supplier_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -263,15 +282,14 @@ namespace ProcurementTracker.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Attachment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AttachementName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductId1 = table.Column<long>(type: "bigint", nullable: false)
+                    ProductId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductImage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductImage_Product_ProductId1",
-                        column: x => x.ProductId1,
+                        name: "FK_ProductImage_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -338,9 +356,9 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductImage_ProductId1",
+                name: "IX_ProductImage_ProductId",
                 table: "ProductImage",
-                column: "ProductId1");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseRequest_CreatedById",
@@ -358,9 +376,9 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 column: "LastUpdatedById1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchaseRequest_SupplierId1",
+                name: "IX_PurchaseRequest_SupplierId",
                 table: "PurchaseRequest",
-                column: "SupplierId1");
+                column: "SupplierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseRequestProductItem_PurchaseRequestId",
@@ -376,6 +394,11 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 name: "IX_Supplier_LastUpdatedById",
                 table: "Supplier",
                 column: "LastUpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SupplierProduct_SupplierId",
+                table: "SupplierProduct",
+                column: "SupplierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_CreatedById",
@@ -403,6 +426,9 @@ namespace ProcurementTracker.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "PurchaseRequestProductItem");
+
+            migrationBuilder.DropTable(
+                name: "SupplierProduct");
 
             migrationBuilder.DropTable(
                 name: "Order");

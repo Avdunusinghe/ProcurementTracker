@@ -15,6 +15,7 @@
 
         public virtual ICollection<OrderItem> OrderItems { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public virtual  ICollection<SupplierProduct> SupplierProducts { get; set; }
 
     }
 }
