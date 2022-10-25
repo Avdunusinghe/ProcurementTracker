@@ -28,7 +28,7 @@ using (var scope = app.Services.CreateScope())
     await initialiser.SeedAsync();
 }
 app.UseHttpsRedirection();
-
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
