@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProcurementTracker.Application.Common.Response.AuthenticationDTOs
 {
-    internal class UserAuthenticationResponseDTO
+    public class UserAuthenticationResponseDTO
     {
         internal UserAuthenticationResponseDTO(bool isLoginSuccess, string token, string email, long userId, string message)
         {
@@ -28,7 +28,7 @@ namespace ProcurementTracker.Application.Common.Response.AuthenticationDTOs
             return new UserAuthenticationResponseDTO(false, string.Empty, string.Empty, 0, errorMessage);
         }
 
-        public static UserAuthenticationResponseDTO Success(string token, string email, long userId, long userApplicationFormId)
+        public static UserAuthenticationResponseDTO Success(string token, string email, long userId)
         {
             return new UserAuthenticationResponseDTO(true, token, email, userId, "User email verified successfully.");
         }

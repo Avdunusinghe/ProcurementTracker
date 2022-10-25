@@ -2,11 +2,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProcurementTracker.Application.Common.Interfaces;
+using ProcurementTracker.Domain.Repositories.Command;
 using ProcurementTracker.Domain.Repositories.Command.Base;
+using ProcurementTracker.Domain.Repositories.Query;
 using ProcurementTracker.Domain.Repositories.Query.Base;
 using ProcurementTracker.Infrastructure.Data;
 using ProcurementTracker.Infrastructure.Interceptors;
+using ProcurementTracker.Infrastructure.Repositories.Command;
 using ProcurementTracker.Infrastructure.Repositories.Command.Base;
+using ProcurementTracker.Infrastructure.Repositories.Query;
 using ProcurementTracker.Infrastructure.Repositories.Query.Base;
 using ProcurementTracker.Infrastructure.Services;
 
@@ -37,11 +41,14 @@ namespace ProcurementTracker.Infrastructure
             services.AddTransient<ProcurementTrackerContextInitialiser>();
 
             services.AddScoped(typeof(IQueryRepository<>), typeof(QueryRepository<>));
-
+            services.AddTransient<IUserQueryRepository, UserQueryRepository>();
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
+            services.AddTransient<IUserCommandRepository, UserCommandRepository>();
 
 
+
+            services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
 
 
             services.AddTransient<IDateTime, DateTimeService>();
