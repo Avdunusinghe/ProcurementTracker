@@ -11,7 +11,7 @@ namespace ProcurementTracker.Domain.Entities
         public long ProductId { get; set; }
         public long PurchaseRequestId { get; set; }
 
-        public PurchaseRequest PurchaseRequest { get; set; }
+        public virtual PurchaseRequest PurchaseRequest { get; set; }
 
     }
 }

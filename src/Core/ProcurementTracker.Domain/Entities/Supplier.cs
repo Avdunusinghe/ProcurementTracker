@@ -7,7 +7,7 @@
         public string Address { get; set; }
         public string MobileNumber { get; set; }
 
-        public ICollection<Product> Products { get; set; }
-        public ICollection<PurchaseRequest> purchaseRequests { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<PurchaseRequest> purchaseRequests { get; set; }
     }
 }

@@ -12,7 +12,7 @@
         public virtual User StatusChangedBy { get; set; }
         public virtual Supplier Supplier { get; set; }
 
-        public ICollection<PurchaseRequestProductItem> purchaseRequestProductItems { get; set; }
+        public virtual ICollection<PurchaseRequestProductItem> purchaseRequestProductItems { get; set; }
 
 
 
