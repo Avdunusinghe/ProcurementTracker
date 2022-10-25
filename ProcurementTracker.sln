@@ -13,13 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{80D463C0-9FF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9E417431-C3FC-49BE-A8CD-C177C15B6D5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementTracker.Application", "src\Core\ProcurementTracker.Application\ProcurementTracker.Application.csproj", "{AAE4F3EC-49B0-4CBB-A4D4-B9D29B07C30E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcurementTracker.Application", "src\Core\ProcurementTracker.Application\ProcurementTracker.Application.csproj", "{AAE4F3EC-49B0-4CBB-A4D4-B9D29B07C30E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementTracker.Domain", "src\Core\ProcurementTracker.Domain\ProcurementTracker.Domain.csproj", "{8F838979-7F50-426C-80BB-70C1C723C90F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcurementTracker.Domain", "src\Core\ProcurementTracker.Domain\ProcurementTracker.Domain.csproj", "{8F838979-7F50-426C-80BB-70C1C723C90F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementTracker.Infrastructure", "src\Infrastructure\ProcurementTracker.Infrastructure\ProcurementTracker.Infrastructure.csproj", "{C0A9624C-1401-4B3C-8922-2AFCCA02E5C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcurementTracker.Infrastructure", "src\Infrastructure\ProcurementTracker.Infrastructure\ProcurementTracker.Infrastructure.csproj", "{C0A9624C-1401-4B3C-8922-2AFCCA02E5C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementTracker.WebAPI", "src\Web\ProcurementTracker.WebAPI\ProcurementTracker.WebAPI.csproj", "{CA60C9CC-D602-4D8A-8D82-3C0DE29A3BAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcurementTracker.WebAPI", "src\Web\ProcurementTracker.WebAPI\ProcurementTracker.WebAPI.csproj", "{CA60C9CC-D602-4D8A-8D82-3C0DE29A3BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementTracker.Insfrastructure.Tests", "test\ProcurementTracker.Insfrastructure.Tests\ProcurementTracker.Insfrastructure.Tests.csproj", "{0B223FD5-2D7D-44AA-8BAB-B45F03929294}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{CA60C9CC-D602-4D8A-8D82-3C0DE29A3BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA60C9CC-D602-4D8A-8D82-3C0DE29A3BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA60C9CC-D602-4D8A-8D82-3C0DE29A3BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B223FD5-2D7D-44AA-8BAB-B45F03929294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B223FD5-2D7D-44AA-8BAB-B45F03929294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B223FD5-2D7D-44AA-8BAB-B45F03929294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B223FD5-2D7D-44AA-8BAB-B45F03929294}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{8F838979-7F50-426C-80BB-70C1C723C90F} = {5261C868-69A8-4B86-BB88-9AB0DD2A5C38}
 		{C0A9624C-1401-4B3C-8922-2AFCCA02E5C4} = {52A2CEC9-A535-4545-A598-33F422F292D3}
 		{CA60C9CC-D602-4D8A-8D82-3C0DE29A3BAA} = {80D463C0-9FFF-40CC-87DF-D0B3A82D3DED}
+		{0B223FD5-2D7D-44AA-8BAB-B45F03929294} = {9E417431-C3FC-49BE-A8CD-C177C15B6D5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5628A31F-0A73-4414-BEBB-8910B38A4F9F}
