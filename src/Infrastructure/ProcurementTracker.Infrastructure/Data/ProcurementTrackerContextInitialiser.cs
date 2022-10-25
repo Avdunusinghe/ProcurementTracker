@@ -82,6 +82,8 @@ namespace ProcurementTracker.Infrastructure.Data
 
                     _context.Users.Add(admin);
                 }
+
+                await _context.SaveChangesAsync();
             }
         }
     }
