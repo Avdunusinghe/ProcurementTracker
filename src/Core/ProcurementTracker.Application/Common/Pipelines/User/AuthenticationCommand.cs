@@ -32,6 +32,8 @@ namespace ProcurementTracker.Application.Common.Pipelines.User
                 Password = request.Password,
             };
 
+            //throw new NotImplementedException("Sentry Error");
+
             return _userAuthenticationService.Login(authenticationDto, cancellationToken);
         }
     }
