@@ -1,16 +1,9 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ProcurementTracker.Application.Common.Response.AuthenticationDTOs;
 using ProcurementTracker.Application.Users.Query;
 using ProcurementTracker.Domain.Entities;
-using ProcurementTracker.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcurementTracker.Infrastructure.Services.Tests
 {

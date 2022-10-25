@@ -49,7 +49,7 @@ namespace ProcurementTracker.Infrastructure
 
 
             services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
-
+            services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<IDateTime, DateTimeService>();
 
