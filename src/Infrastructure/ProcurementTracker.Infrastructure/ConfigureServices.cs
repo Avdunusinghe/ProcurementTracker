@@ -42,6 +42,8 @@ namespace ProcurementTracker.Infrastructure
 
             services.AddScoped(typeof(IQueryRepository<>), typeof(QueryRepository<>));
             services.AddTransient<IUserQueryRepository, UserQueryRepository>();
+            services.AddTransient<ISupplierQueryRepository, SupplierQueryRepository>();
+
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
             services.AddTransient<IUserCommandRepository, UserCommandRepository>();
@@ -50,6 +52,7 @@ namespace ProcurementTracker.Infrastructure
 
             services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMasterDataService, MasterDataService>();
 
             services.AddTransient<IDateTime, DateTimeService>();
 

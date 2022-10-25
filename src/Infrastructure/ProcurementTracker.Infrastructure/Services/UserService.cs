@@ -15,7 +15,7 @@ namespace ProcurementTracker.Infrastructure.Services
         {
             this._mediator = mediator;
         }
-        public async  Task<ResultDTO> SaveUser(UserDTO userDto, CancellationToken cancellationToken)
+        public async Task<ResultDTO> SaveUser(UserDTO userDto, CancellationToken cancellationToken)
         {
             var response = new ResultDTO();
             var user = await _mediator.Send(new GetUserByEmailQuery(userDto.Email), cancellationToken);
