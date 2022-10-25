@@ -6,6 +6,11 @@ namespace ProcurementTracker.WebAPI.Services
     public class CurrentUserService : ICurrentUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+        {
+            this._httpContextAccessor = httpContextAccessor;
+        }
         public long? UserId
         {
             get

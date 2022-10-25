@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 
-
 namespace ProcurementTracker.Application.Common.Behaviours
 {
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : MediatR.IRequest<TResponse>
@@ -12,12 +11,8 @@ namespace ProcurementTracker.Application.Common.Behaviours
         {
             _logger = logger;
         }
-        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             try
             {

@@ -15,6 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddHttpContextAccessor();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
             services.AddHealthChecks()
