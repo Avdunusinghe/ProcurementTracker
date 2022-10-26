@@ -42,14 +42,18 @@ namespace ProcurementTracker.Infrastructure
 
             services.AddScoped(typeof(IQueryRepository<>), typeof(QueryRepository<>));
             services.AddTransient<IUserQueryRepository, UserQueryRepository>();
+            services.AddTransient<ISupplierQueryRepository, SupplierQueryRepository>();
+
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
             services.AddTransient<IUserCommandRepository, UserCommandRepository>();
-
+            services.AddTransient<IOrderCommandRepository, OrderCommandRepository>();
 
 
             services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMasterDataService, MasterDataService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddTransient<IDateTime, DateTimeService>();
 

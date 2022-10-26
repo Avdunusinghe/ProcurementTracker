@@ -8,21 +8,22 @@ using System.Threading.Tasks;
 
 namespace ProcurementTracker.Application.Common.Response.OrderDTOs
 {
-    public class OderDTO
+    public class OrderContainerDTO
     {
-        public OderDTO()
+        public OrderContainerDTO()
         {
-            OrderItems = new List<OderItemDTO>();
+            OrderItems = new List<OrderItemDTO>();
         }
         public string ReferenceId { get; set; }
         public decimal TotalPrice { get; set; }
+        public int Supplier { get; set; }
+
         public string ShippingAddress { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime? ShippingDate { get; set; }
         public DateTime? DateTime { get; set; }
         public bool IsProceesed { get; set; }
         public string OrderBy { get; set; }
-        public  List<OderItemDTO> OrderItems { get; set; }
+        public List<OrderItemDTO> OrderItems { get; set; }
     }
 }
-

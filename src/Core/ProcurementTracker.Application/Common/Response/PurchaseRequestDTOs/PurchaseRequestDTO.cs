@@ -15,7 +15,7 @@ namespace ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs
         public long SupplierId { get; set; }
 
         public string StatusChangedBy { get; set; }
-        public string Supplier { get; set; }
+        
 
         public List<PurchaseRequestProductItemDTO> PurchaseRequestProductItems { get; set; }
     }
