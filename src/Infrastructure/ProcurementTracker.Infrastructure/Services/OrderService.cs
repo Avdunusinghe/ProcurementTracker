@@ -32,7 +32,7 @@ namespace ProcurementTracker.Infrastructure.Services
 
                 var order = new Order()
                 {
-                    ReferenceId = "Abv",
+                    ReferenceId = string.Format("{0}_Order", Guid.NewGuid()),
                     IsActive = true,
                     IsProceesed = false,
                     TotalPrice = orderDTO.TotalPrice,
