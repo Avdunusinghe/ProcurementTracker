@@ -11,5 +11,7 @@ namespace ProcurementTracker.Application.Common.Interfaces
     public interface IOrderService 
     {
         Task<ResultDTO> SaveOrder(OrderDTO orderDTO, CancellationToken cancellationToken);
+        //Task<ResultDTO> SaveOrder(OrderDTO orderDTO, CancellationToken cancellationToken);
+
     }
 }
