@@ -24,7 +24,7 @@ namespace ProcurementTracker.Infrastructure.Services
         {
             var orderDataSet = new List<OrderContainerDTO>();
 
-            var orders = await _mediator.Send(new GetAllOrdersFormAsyncQueryCommand());
+            var orders = await _mediator.Send(new GetAllOrdersFormAsyncQuery());
 
 
             if (filter.OrderStatus != 0)
@@ -46,6 +46,7 @@ namespace ProcurementTracker.Infrastructure.Services
                 order.Id = item.Id;
                 order.ReferenceId = item.ReferenceId;
                 order.IsProceesed = item.IsProceesed;
+                order.ShippingDate = item.ShippingDate;
                 order.OrderByName = item.OrderBy.FirstName;
                 order.OrderStatus = item.OrderStatus;
                 order.SupplierName = item.Supplier.SupplierName;

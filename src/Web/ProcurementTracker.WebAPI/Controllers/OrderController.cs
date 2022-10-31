@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProcurementTracker.Application.Common.Pipelines.Order.Command;
 using ProcurementTracker.Application.Common.Pipelines.Order.Query;
@@ -29,7 +28,7 @@ namespace ProcurementTracker.WebAPI.Controllers
         }
 
         [HttpPost("getOrders")]
-        public async Task<IActionResult>GetAllOrders([FromBody] GetAllOrderQueryFilterAsync getAllOrderQueryFilterAsync)
+        public async Task<IActionResult>GetAllOrders([FromBody] GetAllOrderQueryFilterAsyncCommand getAllOrderQueryFilterAsync)
         {
             var response = await _mediator.Send(getAllOrderQueryFilterAsync);
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProcurementTracker.Application.Common.Pipelines.MasterData;
+using ProcurementTracker.Application.Common.Pipelines.MasterData.Query;
 
 namespace ProcurementTracker.WebAPI.Controllers
 {
@@ -25,6 +26,22 @@ namespace ProcurementTracker.WebAPI.Controllers
 
             return Ok(response);
         }
-       
+
+        [HttpGet("getProductMasterData")]
+        public async Task<IActionResult> GetProductMasterData()
+        {
+            var response = await _mediator.Send(new ProductMasterDataQuery());
+
+            return Ok(response);
+        }
+
+        [HttpGet("getOrderStatusMasterData")]
+        public async Task<IActionResult> GetOrderStatusMasterData()
+        {
+            var response = await _mediator.Send(new OrderStatusMasterDataQuery());
+
+            return Ok(response);
+        }
+
     }
 }
