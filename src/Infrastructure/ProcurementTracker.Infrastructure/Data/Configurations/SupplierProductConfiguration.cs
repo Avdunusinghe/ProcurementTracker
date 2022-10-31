@@ -25,7 +25,7 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
 
             builder.HasOne<Product>(u => u.Product)
              .WithMany(c => c.SupplierProducts)
-             .HasForeignKey(fk => fk.SupplierId)
+             .HasForeignKey(fk => fk.ProductId)
              .OnDelete(DeleteBehavior.Restrict)
              .IsRequired(false);
         }

@@ -8,6 +8,7 @@
         public string Description { get; set; }
         public long SupplierId { get; set; }
         public Decimal TotalPrice { get; set; }
+        public long StatusChangedById { get; set; }
 
 
         public virtual User StatusChangedBy { get; set; }

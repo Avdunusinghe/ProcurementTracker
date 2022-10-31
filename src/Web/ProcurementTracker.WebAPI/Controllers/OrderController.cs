@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProcurementTracker.Application.Common.Pipelines.Order.Command;
 using ProcurementTracker.Application.Common.Pipelines.Order.Query;
+using ProcurementTracker.Application.Common.Pipelines.PurchaseRequest.Command;
 
 namespace ProcurementTracker.WebAPI.Controllers
 {
@@ -23,6 +24,15 @@ namespace ProcurementTracker.WebAPI.Controllers
         public async Task<IActionResult>SaveUser([FromBody] SaveOrderCommand saveOrderCommand)
         {
             var response = await _mediator.Send(saveOrderCommand);
+
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpPost("savePurchaseRequest")]
+        public async Task<IActionResult> SaveUser([FromBody] SavePurchaseRequestCommand savePurchaseRequestCommand)
+        {
+            var response = await _mediator.Send(savePurchaseRequestCommand);
 
             return Ok(response);
         }

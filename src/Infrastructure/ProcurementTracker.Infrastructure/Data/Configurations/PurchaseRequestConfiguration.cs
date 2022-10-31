@@ -26,9 +26,9 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
 
             builder.HasOne<User>(u => u.StatusChangedBy)
                .WithMany(c => c.StatusChangedPurchaseRequests)
-               .HasForeignKey(fk => fk.LastUpdatedById)
+               .HasForeignKey(fk => fk.StatusChangedById)
                .OnDelete(DeleteBehavior.Restrict)
-               .IsRequired(true);
+               .IsRequired(false);
 
            
             builder.Property(t => t.TotalPrice)
