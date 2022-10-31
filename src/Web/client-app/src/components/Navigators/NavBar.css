@@ -1,0 +1,11 @@
+.head{
+    background-color: #007bff;
+    color: white;
+}
+.nav-link{
+    font-size: large;
+    font-weight: bold;
+}
+.sameline{
+    display: inline-block;
+}
