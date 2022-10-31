@@ -22,6 +22,13 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
             .HasForeignKey(fk => fk.PurchaseRequestId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
+
+            builder.HasOne<Product>(u => u.Product)
+             .WithMany(c => c.PurchaseRequestProductItems)
+             .HasForeignKey(fk => fk.ProductId)
+             .OnDelete(DeleteBehavior.Restrict)
+             .IsRequired(false);
+
         }
     }
 }

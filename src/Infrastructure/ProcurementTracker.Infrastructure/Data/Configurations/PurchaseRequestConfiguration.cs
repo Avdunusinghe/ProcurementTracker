@@ -30,12 +30,7 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
 
-            builder.HasOne<Product>(u => u.Product)
-              .WithMany(c => c.PurchaseRequests)
-              .HasForeignKey(fk => fk.ProductId)
-              .OnDelete(DeleteBehavior.Restrict)
-              .IsRequired(false);
-
+           
             builder.Property(t => t.TotalPrice)
                .HasPrecision(14, 2);
 

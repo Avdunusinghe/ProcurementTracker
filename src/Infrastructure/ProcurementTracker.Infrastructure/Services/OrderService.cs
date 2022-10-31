@@ -3,6 +3,7 @@ using ProcurementTracker.Application.Common.Interfaces;
 using ProcurementTracker.Application.Common.Response;
 using ProcurementTracker.Application.Common.Response.OrderDTOs;
 using ProcurementTracker.Application.Common.Response.OrderItemDTOs;
+using ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs;
 using ProcurementTracker.Application.Orders.Command;
 using ProcurementTracker.Application.Orders.Query;
 using ProcurementTracker.Domain.Entities;
@@ -122,6 +123,34 @@ namespace ProcurementTracker.Infrastructure.Services
                response.Message = "Error has been Occured Please Try again";
             }
            
+            return response;
+        }
+
+        public async Task<ResultDTO> SavePurchaseRequest(PurchaseRequestDTO purchaseRequestDTO, CancellationToken cancellationToken)
+        {
+            var response = new ResultDTO();
+
+            try
+            {
+                var purchaseRequest = new PurchaseRequest()
+                {
+
+                    PurchaseRequestStatus = PurchaseRequestStatus.WaitingForApproval,
+                    RequiredDeliveryDate = purchaseRequestDTO.RequiredDeliveryDate,
+                    Description = string.Empty,
+                    SupplierId = purchaseRequestDTO.SupplierId,
+                    IsActive = true,
+
+
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
             return response;
         }
     }
