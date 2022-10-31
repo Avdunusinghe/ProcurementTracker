@@ -5,7 +5,7 @@ using ProcurementTracker.Infrastructure.Repositories.Command.Base;
 
 namespace ProcurementTracker.Infrastructure.Repositories.Command
 {
-    public class UserCommandRepository : CommandRepository<User>,IUserCommandRepository
+    public class UserCommandRepository : CommandRepository<User>, IUserCommandRepository
     {
         public UserCommandRepository(ProcurementTrackerContext context) 
             : base(context)

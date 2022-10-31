@@ -31,6 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     Description = "The web service for SE3070 -Case Studies in Software Engineering  ProcurementTracker Rest Api",
                     TermsOfService = new Uri("https://example.com/terms")
                 });
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -38,6 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                 });
+
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
