@@ -2,17 +2,18 @@
 {
     public class PurchaseRequest : BaseAuditableEntity
     {
-        public long ProductId { get; set; }
+       
         public PurchaseRequestStatus PurchaseRequestStatus { get; set; }
         public DateTime RequiredDeliveryDate { get; set; }
         public string Description { get; set; }
         public long SupplierId { get; set; }
         public Decimal TotalPrice { get; set; }
+        public long StatusChangedById { get; set; }
 
 
         public virtual User StatusChangedBy { get; set; }
         public virtual Supplier Supplier { get; set; }
-        public virtual Product Product { get; set; }
+       
 
         public virtual ICollection<PurchaseRequestProductItem> PurchaseRequestProductItems { get; set; }
 

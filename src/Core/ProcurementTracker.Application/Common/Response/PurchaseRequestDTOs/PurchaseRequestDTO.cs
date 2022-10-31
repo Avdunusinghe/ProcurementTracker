@@ -13,7 +13,7 @@ namespace ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs
         public DateTime RequiredDeliveryDate { get; set; }
         public string Description { get; set; }
         public long SupplierId { get; set; }
-
+        public Decimal TotalPrice { get; set; }
         public string StatusChangedBy { get; set; }
         
 
@@ -23,6 +23,7 @@ namespace ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs
     public class PurchaseRequestProductItemDTO
     {
         public long ProductId { get; set; }
+        public string ProductName { get; set; }
         public long PurchaseRequestId { get; set; }
     }
 

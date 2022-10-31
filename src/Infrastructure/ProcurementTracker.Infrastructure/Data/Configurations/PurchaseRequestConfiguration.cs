@@ -26,16 +26,11 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
 
             builder.HasOne<User>(u => u.StatusChangedBy)
                .WithMany(c => c.StatusChangedPurchaseRequests)
-               .HasForeignKey(fk => fk.LastUpdatedById)
+               .HasForeignKey(fk => fk.StatusChangedById)
                .OnDelete(DeleteBehavior.Restrict)
-               .IsRequired(true);
+               .IsRequired(false);
 
-            builder.HasOne<Product>(u => u.Product)
-              .WithMany(c => c.PurchaseRequests)
-              .HasForeignKey(fk => fk.ProductId)
-              .OnDelete(DeleteBehavior.Restrict)
-              .IsRequired(false);
-
+           
             builder.Property(t => t.TotalPrice)
                .HasPrecision(14, 2);
 

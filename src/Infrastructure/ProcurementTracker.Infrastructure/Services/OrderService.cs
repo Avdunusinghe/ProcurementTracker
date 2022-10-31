@@ -3,8 +3,10 @@ using ProcurementTracker.Application.Common.Interfaces;
 using ProcurementTracker.Application.Common.Response;
 using ProcurementTracker.Application.Common.Response.OrderDTOs;
 using ProcurementTracker.Application.Common.Response.OrderItemDTOs;
+using ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs;
 using ProcurementTracker.Application.Orders.Command;
 using ProcurementTracker.Application.Orders.Query;
+using ProcurementTracker.Application.PurchaseRequests.Command;
 using ProcurementTracker.Domain.Entities;
 using ProcurementTracker.Domain.Enums;
 
@@ -122,6 +124,57 @@ namespace ProcurementTracker.Infrastructure.Services
                response.Message = "Error has been Occured Please Try again";
             }
            
+            return response;
+        }
+
+        public async Task<ResultDTO> SavePurchaseRequest(PurchaseRequestDTO purchaseRequestDTO, CancellationToken cancellationToken)
+        {
+            var response = new ResultDTO();
+
+            try
+            {
+
+                var purchaseRequest = new PurchaseRequest()
+                {
+                    PurchaseRequestStatus = PurchaseRequestStatus.WaitingForApproval,
+                    RequiredDeliveryDate = purchaseRequestDTO.RequiredDeliveryDate,
+                    Description = purchaseRequestDTO.Description,
+                    SupplierId = purchaseRequestDTO.SupplierId,
+                    IsActive = true,
+                    TotalPrice = purchaseRequestDTO.TotalPrice,
+                    StatusChangedById = 1
+
+                };
+
+                purchaseRequest.PurchaseRequestProductItems = new HashSet<PurchaseRequestProductItem>();
+
+                foreach (var item in purchaseRequestDTO.PurchaseRequestProductItems)
+                {
+                    var purchaseRequestProductItem = new PurchaseRequestProductItem()
+                    {
+                        ProductId = purchaseRequestDTO.ProductId,
+                        PurchaseRequestId = purchaseRequest.Id
+                    };
+
+                    purchaseRequest.PurchaseRequestProductItems.Add(purchaseRequestProductItem);
+                }
+
+                await _mediator.Send(new CreatePurchaseRequestCommand()
+                {
+                    PurchaseRequest = purchaseRequest
+                });
+
+                response.IsSuccess = true;
+                response.Message = "PurchaseRequest save has been successfull";
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Error has been Occured Please Try again";
+            }
+
+
             return response;
         }
     }
