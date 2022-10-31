@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace ProcurementTracker.Application.Common.Pipelines.Order.Query
 {
-    public record GetAllOrderQueryFilterAsync() : IRequest<List<OrderContainerDTO>>
+    public record GetAllOrderQueryFilterAsyncCommand() : IRequest<List<OrderContainerDTO>>
     {
         public int OrderStatus { get; set; }
         public long Supplier { get; set; }
     }
 
-    public class GetAllOrderQueryFilterAsyncHandler : IRequestHandler<GetAllOrderQueryFilterAsync, List<OrderContainerDTO>>
+    public class GetAllOrderQueryFilterAsyncHandler : IRequestHandler<GetAllOrderQueryFilterAsyncCommand, List<OrderContainerDTO>>
     {
         private readonly IOrderService _orderService;
         public GetAllOrderQueryFilterAsyncHandler(IOrderService orderService)
         {
             this._orderService = orderService;
         }
-        public async Task<List<OrderContainerDTO>> Handle(GetAllOrderQueryFilterAsync request, CancellationToken cancellationToken)
+        public async Task<List<OrderContainerDTO>> Handle(GetAllOrderQueryFilterAsyncCommand request, CancellationToken cancellationToken)
         {
             var filter = new OrderFilterDTO()
             {

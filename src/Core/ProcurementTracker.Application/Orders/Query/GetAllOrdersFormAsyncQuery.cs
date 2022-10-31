@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ProcurementTracker.Application.Orders.Query
 {
-    public record GetAllOrdersFormAsyncQueryCommand() : IRequest<IQueryable<Order>>;
+    public record GetAllOrdersFormAsyncQuery() : IRequest<IQueryable<Order>>;
 
 
-    public class GetAllOrdersFormAsyncQueryCommandHandler : IRequestHandler<GetAllOrdersFormAsyncQueryCommand, IQueryable<Order>>
+    public class GetAllOrdersFormAsyncQueryCommandHandler : IRequestHandler<GetAllOrdersFormAsyncQuery, IQueryable<Order>>
     {
         private readonly IOrderQueryRepository _orderQueryRepository;
 
@@ -21,7 +21,7 @@ namespace ProcurementTracker.Application.Orders.Query
             this._orderQueryRepository = orderQueryRepository;
         }
 
-        public async Task<IQueryable<Order>> Handle(GetAllOrdersFormAsyncQueryCommand request, CancellationToken cancellationToken)
+        public async Task<IQueryable<Order>> Handle(GetAllOrdersFormAsyncQuery request, CancellationToken cancellationToken)
         {
             var orders =  _orderQueryRepository.GetAllOrdersFormAsync();
 

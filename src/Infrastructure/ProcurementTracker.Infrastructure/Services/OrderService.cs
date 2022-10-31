@@ -24,7 +24,7 @@ namespace ProcurementTracker.Infrastructure.Services
         {
             var orderDataSet = new List<OrderContainerDTO>();
 
-            var orders = await _mediator.Send(new GetAllOrdersFormAsyncQueryCommand());
+            var orders = await _mediator.Send(new GetAllOrdersFormAsyncQuery());
 
 
             if (filter.OrderStatus != 0)
