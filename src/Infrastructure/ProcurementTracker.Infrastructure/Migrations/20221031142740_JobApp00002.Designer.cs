@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProcurementTracker.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using ProcurementTracker.Infrastructure.Data;
 namespace ProcurementTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ProcurementTrackerContext))]
-    partial class ProcurementTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20221031142740_JobApp00002")]
+    partial class JobApp00002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,8 +241,7 @@ namespace ProcurementTracker.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasPrecision(14, 2)
-                        .HasColumnType("decimal(14,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

@@ -49,6 +49,7 @@ namespace ProcurementTracker.Infrastructure
             services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
             services.AddTransient<IUserCommandRepository, UserCommandRepository>();
             services.AddTransient<IOrderCommandRepository, OrderCommandRepository>();
+            services.AddTransient<IPurchaseRequestCommandRepository, PurchaseRequestCommandRepository>();
 
 
             services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();

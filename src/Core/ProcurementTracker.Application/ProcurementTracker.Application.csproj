@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Common\Response\Common\" />
     <Folder Include="Products\Command\" />
+    <Folder Include="PurchaseRequests\Query\" />
     <Folder Include="Suppliers\Command\" />
   </ItemGroup>
 
