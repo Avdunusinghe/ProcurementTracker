@@ -46,6 +46,7 @@ namespace ProcurementTracker.Infrastructure.Services
                 order.Id = item.Id;
                 order.ReferenceId = item.ReferenceId;
                 order.IsProceesed = item.IsProceesed;
+                order.ShippingDate = item.ShippingDate;
                 order.OrderByName = item.OrderBy.FirstName;
                 order.OrderStatus = item.OrderStatus;
                 order.SupplierName = item.Supplier.SupplierName;
