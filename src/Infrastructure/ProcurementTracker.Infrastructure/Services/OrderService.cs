@@ -7,6 +7,7 @@ using ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs;
 using ProcurementTracker.Application.Orders.Command;
 using ProcurementTracker.Application.Orders.Query;
 using ProcurementTracker.Application.PurchaseRequests.Command;
+using ProcurementTracker.Application.PurchaseRequests.Query;
 using ProcurementTracker.Domain.Entities;
 using ProcurementTracker.Domain.Enums;
 
@@ -74,6 +75,48 @@ namespace ProcurementTracker.Infrastructure.Services
 
         }
 
+        public async Task<List<PurchaseRequestContainerDTO>> GetAllPurchaseRequest(PurchaseRequestFilterDTO filter, CancellationToken cancellationToken)
+        {
+            var response = new List<PurchaseRequestContainerDTO>();
+
+            var purchaseRequests = await _mediator.Send(new GetAllPurchaseRequestQuery());
+
+            if(filter.PurchaseRequestStatus != 0)
+            {
+                purchaseRequests = purchaseRequests
+                                  .Where(x=>x.PurchaseRequestStatus == filter.PurchaseRequestStatus)
+                                  .OrderByDescending(x=>x.Created)
+                                  .ToList();
+
+            }
+
+            foreach (var item in purchaseRequests)
+            {
+                var purchaseRequest = new PurchaseRequestContainerDTO();
+
+                purchaseRequest.Id = item.Id;
+                purchaseRequest.SupplierId = item.SupplierId;
+                purchaseRequest.SupplierName = item.Supplier.SupplierName;
+                purchaseRequest.StatusChangedByName = item.StatusChangedBy.FirstName;
+                purchaseRequest.TotalPrice = item.TotalPrice;
+
+                foreach(var product in item.PurchaseRequestProductItems)
+                {
+                    purchaseRequest.PurchaseRequestProductItems.Add(new PurchaseRequestProductItemDTO()
+                    {
+                        ProductId = product.ProductId,
+                        ProductName = product.Product.Name,
+                    });
+                }
+
+                response.Add(purchaseRequest);
+
+            }
+
+            return response;
+
+        }
+
         public async Task<ResultDTO> SaveOrder(OrderDTO orderDTO, CancellationToken cancellationToken)
         {
             var response = new ResultDTO();
@@ -91,7 +134,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     ShippingDate = orderDTO.ShippingDate,
                     ShippingAddress = "ABC",
                     OrderStatus = OrderStatus.Pending,
-                    OrderByUserId = 1,
+                    OrderByUserId = _currentUserService.UserId!.Value,
 
                 };
 
@@ -142,7 +185,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     SupplierId = purchaseRequestDTO.SupplierId,
                     IsActive = true,
                     TotalPrice = purchaseRequestDTO.TotalPrice,
-                    StatusChangedById = 1
+                    StatusChangedById = _currentUserService.UserId!.Value
 
                 };
 
