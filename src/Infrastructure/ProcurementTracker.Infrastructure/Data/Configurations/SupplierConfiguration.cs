@@ -23,6 +23,10 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
                .HasForeignKey(fk => fk.LastUpdatedById)
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
+
+            builder.HasOne<Order>(o => o.Order)
+                .WithOne(o => o.Supplier)
+                .HasForeignKey<Order>(fk => fk.SupplierId);
         }
     }
 }

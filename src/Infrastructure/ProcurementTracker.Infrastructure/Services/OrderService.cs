@@ -2,14 +2,11 @@
 using ProcurementTracker.Application.Common.Interfaces;
 using ProcurementTracker.Application.Common.Response;
 using ProcurementTracker.Application.Common.Response.OrderDTOs;
+using ProcurementTracker.Application.Common.Response.OrderItemDTOs;
 using ProcurementTracker.Application.Orders.Command;
+using ProcurementTracker.Application.Orders.Query;
 using ProcurementTracker.Domain.Entities;
 using ProcurementTracker.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcurementTracker.Infrastructure.Services
 {
@@ -21,6 +18,57 @@ namespace ProcurementTracker.Infrastructure.Services
         {
             this._mediator = mediator;
             this._currentUserService = currentUserService;
+        }
+
+        public async Task<List<OrderContainerDTO>> GetAllOrders(OrderFilterDTO filter, CancellationToken cancellationToken)
+        {
+            var orderDataSet = new List<OrderContainerDTO>();
+
+            var orders = await _mediator.Send(new GetAllOrdersFormAsyncQueryCommand());
+
+
+            if (filter.OrderStatus != 0)
+            {
+                orders = orders.Where(x => x.OrderStatus == (OrderStatus)filter.OrderStatus);
+            }
+
+            if(filter.Supplier != 0)
+            {
+                orders = orders.Where(x => x.SupplierId == filter.Supplier);
+            }
+           
+            var availableDataSet = orders.OrderByDescending(x => x.Created).ToList();
+
+            foreach(var item in availableDataSet)
+            {
+                var order = new OrderContainerDTO();
+
+                order.Id = item.Id;
+                order.ReferenceId = item.ReferenceId;
+                order.IsProceesed = item.IsProceesed;
+                order.OrderByName = item.OrderBy.FirstName;
+                order.OrderStatus = item.OrderStatus;
+                order.SupplierName = item.Supplier.SupplierName;
+                order.LastModifiedByName = item.LastUpdatedById.HasValue ? item.LastUpdatedBy.FirstName : string.Empty;
+
+                foreach (var orderItem in item.OrderItems)
+                {
+                    order.OrderItems.Add(new OrderItemDTO()
+                    {
+                        Id = orderItem.Id,
+                        NumberOfItems = orderItem.NumberOfItems,
+                        ProductId = orderItem.ProductId,
+                        OrderId = orderItem.OrderId,
+                    });
+                }
+
+                orderDataSet.Add(order);
+                
+            }
+
+            return orderDataSet;
+
+
         }
 
         public async Task<ResultDTO> SaveOrder(OrderDTO orderDTO, CancellationToken cancellationToken)
@@ -35,6 +83,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     ReferenceId = string.Format("{0}_Order", Guid.NewGuid()),
                     IsActive = true,
                     IsProceesed = false,
+                    SupplierId = orderDTO.SupplierId,
                     TotalPrice = orderDTO.TotalPrice,
                     ShippingDate = orderDTO.ShippingDate,
                     ShippingAddress = "ABC",

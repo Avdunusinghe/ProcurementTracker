@@ -10,5 +10,7 @@
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<PurchaseRequest> purchaseRequests { get; set; }
         public virtual ICollection<SupplierProduct> SupplierProducts { get; set; }
+
+        public virtual Order Order { get; set; }
     }
 }

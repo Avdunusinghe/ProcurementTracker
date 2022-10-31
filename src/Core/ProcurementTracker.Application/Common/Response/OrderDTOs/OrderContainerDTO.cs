@@ -14,16 +14,17 @@ namespace ProcurementTracker.Application.Common.Response.OrderDTOs
         {
             OrderItems = new List<OrderItemDTO>();
         }
+        public long Id { get; set; }
         public string ReferenceId { get; set; }
         public decimal TotalPrice { get; set; }
-        public int Supplier { get; set; }
+        public string SupplierName { get; set; }
 
         public string ShippingAddress { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime? ShippingDate { get; set; }
-        public DateTime? DateTime { get; set; }
         public bool IsProceesed { get; set; }
-        public string OrderBy { get; set; }
+        public string? OrderByName { get; set; }
+        public string? LastModifiedByName { get; set; }
         public List<OrderItemDTO> OrderItems { get; set; }
     }
 }
