@@ -65,49 +65,6 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReferenceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(14,2)", precision: 14, scale: 2, nullable: false),
-                    ShippingAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderStatus = table.Column<int>(type: "int", nullable: false),
-                    ShippingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsProceesed = table.Column<bool>(type: "bit", nullable: false),
-                    OrderByUserId = table.Column<long>(type: "bigint", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<long>(type: "bigint", nullable: false),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastUpdatedById = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Order_User_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Order_User_LastUpdatedById",
-                        column: x => x.LastUpdatedById,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Order_User_OrderByUserId",
-                        column: x => x.OrderByUserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Supplier",
                 columns: table => new
                 {
@@ -135,6 +92,55 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Supplier_User_LastUpdatedById",
                         column: x => x.LastUpdatedById,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReferenceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(14,2)", precision: 14, scale: 2, nullable: false),
+                    ShippingAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false),
+                    ShippingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsProceesed = table.Column<bool>(type: "bit", nullable: false),
+                    OrderByUserId = table.Column<long>(type: "bigint", nullable: false),
+                    SupplierId = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedById = table.Column<long>(type: "bigint", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastUpdatedById = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_Supplier_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Order_User_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_User_LastUpdatedById",
+                        column: x => x.LastUpdatedById,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_User_OrderByUserId",
+                        column: x => x.OrderByUserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -228,26 +234,6 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SupplierProduct",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    SupplierId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SupplierProduct", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SupplierProduct_Supplier_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Supplier",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderItem",
                 columns: table => new
                 {
@@ -296,6 +282,32 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SupplierProduct",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    SupplierId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SupplierProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SupplierProduct_Product_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SupplierProduct_Supplier_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PurchaseRequestProductItem",
                 columns: table => new
                 {
@@ -329,6 +341,12 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 name: "IX_Order_OrderByUserId",
                 table: "Order",
                 column: "OrderByUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_SupplierId",
+                table: "Order",
+                column: "SupplierId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_OrderId",
@@ -434,10 +452,10 @@ namespace ProcurementTracker.Infrastructure.Migrations
                 name: "Order");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "PurchaseRequest");
 
             migrationBuilder.DropTable(
-                name: "PurchaseRequest");
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "Supplier");

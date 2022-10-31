@@ -37,9 +37,6 @@ namespace ProcurementTracker.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("DateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -70,6 +67,9 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.Property<DateTime?>("ShippingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("SupplierId")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal>("TotalPrice")
                         .HasPrecision(14, 2)
                         .HasColumnType("decimal(14,2)");
@@ -81,6 +81,9 @@ namespace ProcurementTracker.Infrastructure.Migrations
                     b.HasIndex("LastUpdatedById");
 
                     b.HasIndex("OrderByUserId");
+
+                    b.HasIndex("SupplierId")
+                        .IsUnique();
 
                     b.ToTable("Order", (string)null);
                 });
@@ -433,11 +436,19 @@ namespace ProcurementTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProcurementTracker.Domain.Entities.Supplier", "Supplier")
+                        .WithOne("Order")
+                        .HasForeignKey("ProcurementTracker.Domain.Entities.Order", "SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
 
                     b.Navigation("LastUpdatedBy");
 
                     b.Navigation("OrderBy");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.OrderItem", b =>
@@ -628,6 +639,9 @@ namespace ProcurementTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("ProcurementTracker.Domain.Entities.Supplier", b =>
                 {
+                    b.Navigation("Order")
+                        .IsRequired();
+
                     b.Navigation("Products");
 
                     b.Navigation("SupplierProducts");

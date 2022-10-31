@@ -32,6 +32,8 @@ namespace ProcurementTracker.Infrastructure.Data.Configurations
                .HasForeignKey(fk => fk.OrderByUserId)
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
+
+           
         }
     }
 }
