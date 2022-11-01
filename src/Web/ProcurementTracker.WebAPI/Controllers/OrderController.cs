@@ -53,5 +53,13 @@ namespace ProcurementTracker.WebAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("acceptPurchaseRequest")]
+        public async Task<IActionResult> AcceptPurchaseRequest([FromBody] AcceptPurchaseRequestCommand acceptPurchaseRequestCommand)
+        {
+            var response = await _mediator.Send(acceptPurchaseRequestCommand);
+
+            return Ok(response);
+        }
     }
 }
