@@ -23,6 +23,58 @@ namespace ProcurementTracker.Infrastructure.Services
             this._currentUserService = currentUserService;
         }
 
+        public async Task<ResultDTO> AcceptPurchaseRequest(PurchaseRequestDTO purchaseRequestDTO, CancellationToken cancellationToken)
+        {
+            var response = new ResultDTO();
+            try
+            {
+                var order = new Order()
+                {
+                    ReferenceId = string.Format("_Order{0}", Guid.NewGuid()),
+                    IsActive = true,
+                    IsProceesed = true,
+                    SupplierId = purchaseRequestDTO.SupplierId,
+                    TotalPrice = purchaseRequestDTO.TotalPrice,
+                    ShippingDate = purchaseRequestDTO.RequiredDeliveryDate,
+                    ShippingAddress = "ABC",
+                    OrderStatus = OrderStatus.Approved,
+                    OrderByUserId = _currentUserService.UserId!.Value,
+
+                };
+
+                order.OrderItems = new HashSet<OrderItem>();
+
+                foreach (var item in purchaseRequestDTO.PurchaseRequestProductItems)
+                {
+                    var orderItem = new OrderItem()
+                    {
+                        OrderId = order.Id,
+                        NumberOfItems = item.NumberOfItem,
+                        ProductId = item.ProductId,
+
+                    };
+
+                    order.OrderItems.Add(orderItem);
+                }
+
+
+                await _mediator.Send(new CreateOrderCommand()
+                {
+                    Order = order
+                });
+
+                response.IsSuccess = true;
+                response.Message = "PurchaseRequest has been aceepted successfull";
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Error has been Occured Please Try again";
+            }
+
+            return response;
+        }
+
         public async Task<List<OrderContainerDTO>> GetAllOrders(OrderFilterDTO filter, CancellationToken cancellationToken)
         {
             var orderDataSet = new List<OrderContainerDTO>();
@@ -106,6 +158,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     {
                         ProductId = product.ProductId,
                         ProductName = product.Product.Name,
+                        NumberOfItem = product.NumberOfItem,
                     });
                 }
 
@@ -133,7 +186,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     TotalPrice = orderDTO.TotalPrice,
                     ShippingDate = orderDTO.ShippingDate,
                     ShippingAddress = "ABC",
-                    OrderStatus = OrderStatus.Pending,
+                    OrderStatus = orderDTO.OrderStatus,
                     OrderByUserId = _currentUserService.UserId!.Value,
 
                 };
@@ -153,13 +206,28 @@ namespace ProcurementTracker.Infrastructure.Services
                     order.OrderItems.Add(orderItem);
                 }
 
-                await _mediator.Send(new CreateOrderCommand()
+                if(orderDTO.Id == 0)
                 {
-                    Order = order
-                });
+                    await _mediator.Send(new CreateOrderCommand()
+                    {
+                        Order = order
+                    });
 
-                response.IsSuccess = true;
-                response.Message = "Order save has been successfull";
+                    response.IsSuccess = true;
+                    response.Message = "Order save has been successfull";
+                }
+                else
+                {
+                    await _mediator.Send(new EditOrderCommand()
+                    {
+                        Order = order
+                    });
+
+                    response.IsSuccess = true;
+                    response.Message = "Order update has been successfull";
+                }
+
+               
 
             }catch (Exception ex)
             {
@@ -179,7 +247,7 @@ namespace ProcurementTracker.Infrastructure.Services
 
                 var purchaseRequest = new PurchaseRequest()
                 {
-                    PurchaseRequestStatus = PurchaseRequestStatus.WaitingForApproval,
+                    PurchaseRequestStatus = purchaseRequestDTO.PurchaseRequestStatus,
                     RequiredDeliveryDate = purchaseRequestDTO.RequiredDeliveryDate,
                     Description = purchaseRequestDTO.Description,
                     SupplierId = purchaseRequestDTO.SupplierId,
@@ -195,20 +263,35 @@ namespace ProcurementTracker.Infrastructure.Services
                 {
                     var purchaseRequestProductItem = new PurchaseRequestProductItem()
                     {
-                        ProductId = purchaseRequestDTO.ProductId,
+                        ProductId = item.ProductId,
+                        NumberOfItem = item.NumberOfItem,
                         PurchaseRequestId = purchaseRequest.Id
                     };
 
                     purchaseRequest.PurchaseRequestProductItems.Add(purchaseRequestProductItem);
                 }
-
-                await _mediator.Send(new CreatePurchaseRequestCommand()
+                if(purchaseRequestDTO.Id == 0)
                 {
-                    PurchaseRequest = purchaseRequest
-                });
+                    await _mediator.Send(new CreatePurchaseRequestCommand()
+                    {
+                        PurchaseRequest = purchaseRequest
+                    });
 
-                response.IsSuccess = true;
-                response.Message = "PurchaseRequest save has been successfull";
+                    response.IsSuccess = true;
+                    response.Message = "PurchaseRequest save has been successfull";
+                }
+                else
+                {
+                    await _mediator.Send(new EditPurchaseRequestCommand()
+                    {
+                        PurchaseRequest = purchaseRequest
+                    });
+
+                    response.IsSuccess = true;
+                    response.Message = "PurchaseRequest update has been successfull";
+                }
+
+               
 
             }
             catch (Exception ex)
@@ -220,5 +303,8 @@ namespace ProcurementTracker.Infrastructure.Services
 
             return response;
         }
+
+
+
     }
 }

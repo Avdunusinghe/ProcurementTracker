@@ -14,11 +14,13 @@ namespace ProcurementTracker.Application.Common.Response.OrderDTOs
         {
             OrderItems = new List<OrderItemDTO>();
         }
+        public long Id { get; set; }
         public decimal TotalPrice { get; set; }
         public long SupplierId { get; set; }
         public DateTime? ShippingDate { get; set; }
         public bool IsProceesed { get; set; }
         public string OrderBy { get; set; }
+        public OrderStatus OrderStatus { get; set; }
         public  List<OrderItemDTO> OrderItems { get; set; }
     }
 }

@@ -6,6 +6,7 @@ Add-Migration JobApp00003 -Project ProcurementTracker.Infrastructure -StartUp Pr
 Add-Migration JobApp00004 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
 Add-Migration JobApp00005 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
 Add-Migration JobApp00006 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
+Add-Migration JobApp00007 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
 
 Update-Database -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
 
@@ -14,3 +15,4 @@ Script-Migration -From JobApp00002 -Project ProcurementTracker.Infrastructure -S
 Script-Migration -From JobApp00003 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
 Script-Migration -From JobApp00004 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
 Script-Migration -From JobApp00005 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose
+Script-Migration -From JobApp00006 -Project ProcurementTracker.Infrastructure -StartUp ProcurementTracker.WebAPI -Verbose

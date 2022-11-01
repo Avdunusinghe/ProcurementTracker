@@ -9,6 +9,7 @@ namespace ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs
             PurchaseRequestProductItems = new List<PurchaseRequestProductItemDTO>();
         }
 
+        public long Id { get; set; }
         public long ProductId { get; set; }
         public PurchaseRequestStatus PurchaseRequestStatus { get; set; }
         public DateTime RequiredDeliveryDate { get; set; }
@@ -25,6 +26,7 @@ namespace ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs
     {
         public long ProductId { get; set; }
         public string ProductName { get; set; }
+        public int NumberOfItem { get; set; }
         public long PurchaseRequestId { get; set; }
     }
 
