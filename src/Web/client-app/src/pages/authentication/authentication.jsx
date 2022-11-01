@@ -65,7 +65,11 @@ export const Authentication = () => {
   );
 
   return (
+    <div>
+    <div style={{ backgroundImage: 'url("https://cdn.pixabay.com/photo/2018/02/02/11/02/logistics-3125136_960_720.jpg")', backgroundSize: 'cover'}}>
+       
     <div className="form-demo">
+      <br/><br/>
       <Dialog
         visible={showMessage}
         onHide={() => setShowMessage(false)}
@@ -90,8 +94,11 @@ export const Authentication = () => {
       </Dialog>
 
       <div className="p-d-flex p-jc-center">
-        <div className="card">
-          <h5 className="p-text-center">Register</h5>
+        <div className="Form">
+        <br/><br/><br/>
+        
+          <h1 className="p-text-center"><img src="https://www.pngall.com/wp-content/uploads/5/Account-Login-Button-PNG-Clipart.png" style={{ height: "100px" }}/></h1>
+          <br/><br/>
           <Form
             onSubmit={onSubmit}
             initialValues={{ email: "", password: "" }}
@@ -151,12 +158,16 @@ export const Authentication = () => {
                     </div>
                   )}
                 />
-                <Button type="submit" label="Submit" className="p-mt-2" />
+                <Button type="submit" label="Login" className="p-mt-2" />
+                <div style={{marginTop:'80%'}}></div>
               </form>
+              
             )}
           />
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };
