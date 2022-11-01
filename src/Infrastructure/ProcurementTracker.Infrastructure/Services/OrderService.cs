@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProcurementTracker.Application.Common.Helper;
 using ProcurementTracker.Application.Common.Interfaces;
 using ProcurementTracker.Application.Common.Response;
 using ProcurementTracker.Application.Common.Response.OrderDTOs;
@@ -104,7 +105,11 @@ namespace ProcurementTracker.Infrastructure.Services
                 order.ShippingDate = item.ShippingDate;
                 order.OrderByName = item.OrderBy.FirstName;
                 order.OrderStatus = item.OrderStatus;
+                order.OrderStatusResult = EnumHelper.GetEnumDescription((OrderStatus)item.OrderStatus);  
                 order.SupplierName = item.Supplier.SupplierName;
+                order.SupplierId = item.SupplierId;
+                order.TotalPrice = item.TotalPrice;
+                order.ShippingAddress = item.ShippingAddress;
                 order.LastModifiedByName = item.LastUpdatedById.HasValue ? item.LastUpdatedBy.FirstName : string.Empty;
 
                 foreach (var orderItem in item.OrderItems)
@@ -114,7 +119,10 @@ namespace ProcurementTracker.Infrastructure.Services
                         Id = orderItem.Id,
                         NumberOfItems = orderItem.NumberOfItems,
                         ProductId = orderItem.ProductId,
+                        ProductName = orderItem.Product.Name,
+                        ItemPrice = orderItem.Product.Price,
                         OrderId = orderItem.OrderId,
+                        TotalPriceProduct = orderItem.NumberOfItems * orderItem.Product.Price
                     });
                 }
 

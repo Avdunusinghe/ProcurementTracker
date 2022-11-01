@@ -18,7 +18,8 @@ namespace ProcurementTracker.Application.Common.Response.OrderDTOs
         public string ReferenceId { get; set; }
         public decimal TotalPrice { get; set; }
         public string SupplierName { get; set; }
-
+        public string OrderStatusResult { get; set; }
+        public long SupplierId { get; set; }
         public string ShippingAddress { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime? ShippingDate { get; set; }
