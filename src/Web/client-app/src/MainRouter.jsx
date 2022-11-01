@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import NavBar from "./components/Navigators/NavBar";
 import { Authentication } from "./pages/authentication/authentication";
 import { Order } from "./pages/order/order";
+import pendingQuatation from "./pages/quatation/pendingQuatation";
 
 export default class MainRouter extends Component {
   render() {
@@ -10,7 +11,8 @@ export default class MainRouter extends Component {
       <div>
         <BrowserRouter>
           <NavBar />
-          <Order></Order>
+          <Route path="/" exact component={Order} />
+          <Route path="/quatation" exact component={pendingQuatation} />
         </BrowserRouter>
       </div>
     );
