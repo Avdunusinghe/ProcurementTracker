@@ -35,7 +35,7 @@ export default class NavBar extends Component {
 								<a class="nav-link"  style={{color:'white'}}  href="#">
 									Orders
 								</a>
-								<a class="nav-link"  style={{color:'white'}}  href="#">
+								<a class="nav-link"  style={{color:'white'}}  href="/quatation">
 									Quatation
 								</a>
 								<a class="nav-link"  style={{color:'white'}} >Contact Us</a>
