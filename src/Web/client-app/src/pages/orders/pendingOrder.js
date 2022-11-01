@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import swal from "sweetalert";
-import "./myStyles.css";
+import "./mystyles.css";
 
 export default class pendingOrder extends Component {
     constructor(props) {

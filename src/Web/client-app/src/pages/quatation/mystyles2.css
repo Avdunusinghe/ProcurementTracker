@@ -1,0 +1,71 @@
+.card1{
+    border-width: 5px;
+    padding: 10px;
+    border-color: black;
+    box-shadow: 5px 5px black;
+}
+.alignment{
+    margin-left: 50px;
+    margin-top: 10px;
+    font-size: larger;
+}
+.topic{
+    text-shadow: 10px;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.cont{
+    margin-left: 30%;
+}
+a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+  }
+  a:hover {
+    color: black;
+  }
+  .previous {
+    background-color: #058e5c;
+    color: black;
+    border-radius: 10%;
+    margin-left: 100%;
+    width: 110px;
+    
+  }
+  .textsize{
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  .textsize2{
+    font-size: small;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  .center {
+    text-align: center;
+  }
+  
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+  }
+  
+  .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+  .center2{
+    padding-left: 45%;
+  }
