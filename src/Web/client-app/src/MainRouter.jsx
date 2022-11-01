@@ -23,7 +23,8 @@ export default class MainRouter extends Component {
         <Route path="/approve" exact component={Approve}></Route>
         </div>
        
-          <Route path="/" exact component={Order} />
+          <Route path="/" exact component={Authentication} />
+          <Route path="/Order" exact component={Order} />
           <Route path="/quatation" exact component={pendingQuatation} />
           <Route path="/quatationRequests" exact component={QuatationRequests} />
 
