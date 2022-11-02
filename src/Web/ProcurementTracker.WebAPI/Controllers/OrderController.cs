@@ -62,5 +62,13 @@ namespace ProcurementTracker.WebAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("getPurchaseRequestById/{id:long}")]
+        public async Task<IActionResult> GetPurchaseRequestById(long id)
+        {
+            var response = await _mediator.Send(new GetPurchaseRequestByIdFilterQuery(id));
+
+            return Ok(response);
+        }
     }
 }
