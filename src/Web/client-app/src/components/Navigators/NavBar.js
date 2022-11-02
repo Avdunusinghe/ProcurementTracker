@@ -43,7 +43,7 @@ export default class NavBar extends Component {
                   style={{ color: "white" }}
                   href="/quatation"
                 >
-                  Quatation
+                  Quotation
                 </a>
                 <a class="nav-link" style={{ color: "white" }}>
                   Contact Us

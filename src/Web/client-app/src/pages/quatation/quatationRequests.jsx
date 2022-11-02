@@ -70,7 +70,7 @@ export default class quatationRequests extends Component {
           <div>
             <br />
             <h3 className="p-text-center">
-              <b>Quatation Requests</b>
+              <b>Quotation Requests</b>
             </h3>
             <br />
           </div>
