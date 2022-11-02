@@ -26,7 +26,7 @@ import masterDataService from "../../services/masterData/master.data.service";
 
 export const Order = () => {
   let orderModel = {
-    id: null,
+    id: 0,
     referenceId: "",
     totalPrice: null,
     supplierName: "",
@@ -124,6 +124,36 @@ export const Order = () => {
 
   const processOrder = () => {
     setSubmitted(true);
+
+    let _order = { ...order };
+
+    const orderDTO = {
+      id: _order.id,
+      totalPrice: _order.totalPrice,
+      supplierId: _order.supplierId,
+      isProceesed: true,
+      shippingDate: _order.shippingDate,
+      orderStatus: _order.orderStatus,
+      orderItems: _order.orderItems,
+    };
+    console.log(orderDTO);
+    orderService.saveOrder(orderDTO).then((response) => {
+      if (response.data.isSuccess) {
+        toast.current.show({
+          severity: "success",
+          summary: "Successful",
+          detail: response.data.message,
+          life: 3000,
+        });
+      } else {
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: response.data.message,
+          life: 3000,
+        });
+      }
+    });
   };
 
   const editProduct = (product) => {};

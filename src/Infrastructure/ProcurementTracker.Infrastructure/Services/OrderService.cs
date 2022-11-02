@@ -157,8 +157,10 @@ namespace ProcurementTracker.Infrastructure.Services
                 purchaseRequest.Id = item.Id;
                 purchaseRequest.SupplierId = item.SupplierId;
                 purchaseRequest.SupplierName = item.Supplier.SupplierName;
+                purchaseRequest.RequiredDeliveryDate = item.RequiredDeliveryDate;
                 purchaseRequest.StatusChangedByName = item.StatusChangedBy.FirstName;
                 purchaseRequest.TotalPrice = item.TotalPrice;
+                purchaseRequest.CreatedDate = item.Created;
 
                 foreach(var product in item.PurchaseRequestProductItems)
                 {
@@ -184,38 +186,40 @@ namespace ProcurementTracker.Infrastructure.Services
 
             try
             {
+                var order = await _mediator.Send(new GetOrderByIdQuery(orderDTO.Id));
 
-                var order = new Order()
+                if(order == null)
                 {
-                    ReferenceId = string.Format("{0}_Order", Guid.NewGuid()),
-                    IsActive = true,
-                    IsProceesed = false,
-                    SupplierId = orderDTO.SupplierId,
-                    TotalPrice = orderDTO.TotalPrice,
-                    ShippingDate = orderDTO.ShippingDate,
-                    ShippingAddress = "ABC",
-                    OrderStatus = orderDTO.OrderStatus,
-                    OrderByUserId = _currentUserService.UserId!.Value,
-
-                };
-
-                order.OrderItems = new HashSet<OrderItem>();
-
-                foreach (var item in orderDTO.OrderItems)
-                {
-                    var orderItem = new OrderItem()
+                    order = new Order()
                     {
-                        OrderId = order.Id,
-                        NumberOfItems = item.NumberOfItems,
-                        ProductId = item.ProductId,
+                        
+                        ReferenceId = string.Format("{0}_Order", Guid.NewGuid()),
+                        IsActive = true,
+                        IsProceesed = false,
+                        SupplierId = orderDTO.SupplierId,
+                        TotalPrice = orderDTO.TotalPrice,
+                        ShippingDate = orderDTO.ShippingDate,
+                        ShippingAddress = "ABC",
+                        OrderStatus = orderDTO.OrderStatus,
+                        OrderByUserId = _currentUserService.UserId!.Value,
 
                     };
 
-                    order.OrderItems.Add(orderItem);
-                }
+                    order.OrderItems = new HashSet<OrderItem>();
 
-                if(orderDTO.Id == 0)
-                {
+                    foreach (var item in orderDTO.OrderItems)
+                    {
+                        var orderItem = new OrderItem()
+                        {
+                            OrderId = order.Id,
+                            NumberOfItems = item.NumberOfItems,
+                            ProductId = item.ProductId,
+
+                        };
+
+                        order.OrderItems.Add(orderItem);
+                    }
+
                     await _mediator.Send(new CreateOrderCommand()
                     {
                         Order = order
@@ -226,6 +230,14 @@ namespace ProcurementTracker.Infrastructure.Services
                 }
                 else
                 {
+                    order.OrderStatus = orderDTO.OrderStatus;
+                    order.SupplierId = orderDTO.SupplierId;
+                    order.TotalPrice = orderDTO.TotalPrice;
+                    order.ShippingDate = orderDTO.ShippingDate;
+                    order.ShippingAddress = "ABC";
+                    order.OrderStatus = orderDTO.OrderStatus;
+
+                    
                     await _mediator.Send(new EditOrderCommand()
                     {
                         Order = order
