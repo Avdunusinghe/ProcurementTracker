@@ -66,6 +66,9 @@ export const Order = () => {
   const [orders, setOrders] = useState(null);
   const [orderStatusFilter, setOrderStatusFilter] = useState(0);
   const [supplierFilter, setSupplierFilter] = useState(0);
+  const [supplierProcessOrder, setSupplierProcessOrder] = useState(0);
+  const [orderStatusProcessOrder, setOrderStatusProcessOrder] = useState(0);
+
   useEffect(() => {
     getAllOrders();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -73,7 +76,7 @@ export const Order = () => {
   const formatCurrency = (value) => {
     return value.toLocaleString("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "LKR",
     });
   };
 
@@ -136,67 +139,44 @@ export const Order = () => {
       orderStatus: _order.orderStatus,
       orderItems: _order.orderItems,
     };
-    console.log(orderDTO);
-    orderService.saveOrder(orderDTO).then((response) => {
-      if (response.data.isSuccess) {
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: response.data.message,
-          life: 3000,
-        });
-      } else {
-        toast.current.show({
-          severity: "error",
-          summary: "Error",
-          detail: response.data.message,
-          life: 3000,
-        });
-      }
-    });
-  };
 
-  const editProduct = (product) => {};
+    orderService
+      .saveOrder(orderDTO)
+      .then((response) => {
+        if (response.data.isSuccess) {
+          toast.current.show({
+            severity: "success",
+            summary: "Successful",
+            detail: response.data.message,
+            life: 3000,
+          });
+          setOrderDialog(false);
+          setOrder(orderModel);
 
-  const confirmDeleteProduct = (product) => {};
-
-  const deleteProduct = () => {};
-
-  const findIndexById = (id) => {
-    let index = -1;
-    for (let i = 0; i < products.length; i++) {
-      if (products[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
+          getAllOrders();
+        } else {
+          toast.current.show({
+            severity: "error",
+            summary: "Error",
+            detail: response.data.message,
+            life: 3000,
+          });
+        }
+      })
+      .finally(() => {
+        setSubmitted(false);
+      });
   };
 
   const handleProcessOrder = (rowData) => {
     let model = rowData;
     model.id = rowData.id;
-    console.log(model);
+
     setOrder({ ...model });
     setOrderDialog(true);
   };
 
-  const importCSV = (e) => {};
-
-  const exportCSV = () => {};
-
-  const confirmDeleteSelected = () => {
-    setDeleteProductsDialog(true);
-  };
-
-  const deleteSelectedProducts = () => {};
-
-  const onCategoryChange = (e) => {};
-
   const onInputChange = (e, name) => {};
-
-  const onInputNumberChange = (e, name) => {};
 
   const onOrderStatusChange = (event) => {
     setOrderStatusFilter(event.value);
@@ -208,10 +188,32 @@ export const Order = () => {
     getAllOrders(event.value.id, orderStatusFilter.id);
   };
 
+  const onProcessOrderSupplierChange = (event, name) => {
+    const supplier = event.value.id;
+
+    setSupplierProcessOrder(event.value);
+
+    let _order = { ...order };
+    _order[`${name}`] = supplier;
+
+    setOrder(_order);
+  };
+
+  const onProcessOrderStatusChange = (event, name) => {
+    setOrderStatusProcessOrder(event.value);
+    const orderStatus = event.value.id;
+
+    let _order = { ...order };
+    _order[`${name}`] = orderStatus;
+
+    setOrder(_order);
+  };
+
   const leftToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <span className="p-input-icon-left">
+        <div style={{ marginLeft: "1em" }}>
+          <label>Order Status </label>
           <Dropdown
             value={orderStatusFilter}
             id="id"
@@ -220,9 +222,12 @@ export const Order = () => {
             onChange={(event) => onOrderStatusChange(event)}
             optionLabel="name"
             placeholder="Select Order Status"
+            style={{ marginLeft: "1em" }}
           />
-        </span>
-        <span className="p-input-icon-left">
+        </div>
+
+        <div style={{ marginLeft: "1em" }}>
+          <label>Supplier Name </label>
           <Dropdown
             value={supplierFilter}
             options={supliers}
@@ -231,7 +236,7 @@ export const Order = () => {
             placeholder="Select Supplier"
             style={{ marginLeft: "1em" }}
           />
-        </span>
+        </div>
       </React.Fragment>
     );
   };
@@ -239,7 +244,7 @@ export const Order = () => {
   const rightToolbarTemplate = () => {};
 
   const priceBodyTemplate = (rowData) => {
-    return formatCurrency(rowData.price);
+    return formatCurrency(rowData.totalPrice);
   };
 
   const deliveryDataeBodyTemplate = (rowData) => {
@@ -250,14 +255,9 @@ export const Order = () => {
     return (
       <React.Fragment>
         <Button
-          icon="pi pi-pencil"
-          className="p-button p-button-success mr-2"
+          label="Process Order"
+          className="p-button p-button-warning mr-2"
           onClick={() => handleProcessOrder(rowData)}
-        />
-        <Button
-          icon="pi pi-trash"
-          className="p-button p-button-warning"
-          onClick={() => confirmDeleteProduct(rowData)}
         />
       </React.Fragment>
     );
@@ -307,7 +307,6 @@ export const Order = () => {
         <DataTable
           ref={dt}
           dataKey="id"
-          paginator
           value={orders}
           rows={10}
           header={header}
@@ -316,13 +315,12 @@ export const Order = () => {
           <Column
             field="supplierName"
             header="Supplier Name"
-            sortable
             style={{ minWidth: "12rem" }}
           ></Column>
           <Column
             field="totalPrice"
             header="Total Price"
-            sortable
+            body={priceBodyTemplate}
             style={{ minWidth: "10rem" }}
           ></Column>
           <Column
@@ -378,10 +376,13 @@ export const Order = () => {
           <Dropdown
             id="supplierId"
             name="supplierId"
-            value={order.supplierId}
+            value={supplierProcessOrder}
             options={supliers}
             optionLabel="name"
             placeholder="Select Supplier"
+            onChange={(event) =>
+              onProcessOrderSupplierChange(event, "supplierId")
+            }
           />
         </div>
         <div className="field">
@@ -389,14 +390,17 @@ export const Order = () => {
           <Dropdown
             id="orderStatus"
             name="orderStatus"
-            value={order.orderStatus}
+            value={orderStatusProcessOrder}
             options={orderStatus}
             optionLabel="name"
             placeholder="Order Status"
+            onChange={(event) =>
+              onProcessOrderStatusChange(event, "orderStatus")
+            }
           />
         </div>
         <div className="field">
-          <label htmlFor="referenceId">Order Items </label>
+          <p>Order Items </p>
           <DataTable value={order.orderItems} responsiveLayout="scroll">
             <Column field="productName" header="Product Name"></Column>
             <Column field="numberOfItems" header="Item Count"></Column>

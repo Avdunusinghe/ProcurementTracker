@@ -34,6 +34,7 @@ namespace ProcurementTracker.Application.Common.Pipelines.Order.Command
                 TotalPrice = request.TotalPrice,
                 SupplierId = request.SupplierId,
                 ShippingDate = request.ShippingDate,
+                OrderStatus = request.OrderStatus,
                 IsProceesed = request.IsProceesed,
                 OrderItems = request.OrderItems,
             };

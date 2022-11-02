@@ -6,7 +6,6 @@ function jwtInterceptor() {
     const isApiUrl = request.url.startsWith(environment.apiUrl);
     if (isApiUrl && currentUser != null) {
       request.headers.Authorization = `Bearer ${currentUser.token}`;
-      console.log(request);
     }
 
     return request;
