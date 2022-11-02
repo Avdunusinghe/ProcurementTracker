@@ -137,23 +137,32 @@ export const Order = () => {
       orderItems: _order.orderItems,
     };
     console.log(orderDTO);
-    orderService.saveOrder(orderDTO).then((response) => {
-      if (response.data.isSuccess) {
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: response.data.message,
-          life: 3000,
-        });
-      } else {
-        toast.current.show({
-          severity: "error",
-          summary: "Error",
-          detail: response.data.message,
-          life: 3000,
-        });
-      }
-    });
+    orderService
+      .saveOrder(orderDTO)
+      .then((response) => {
+        if (response.data.isSuccess) {
+          toast.current.show({
+            severity: "success",
+            summary: "Successful",
+            detail: response.data.message,
+            life: 3000,
+          });
+          setOrderDialog(false);
+          setOrder(orderModel);
+
+          getAllOrders();
+        } else {
+          toast.current.show({
+            severity: "error",
+            summary: "Error",
+            detail: response.data.message,
+            life: 3000,
+          });
+        }
+      })
+      .finally(() => {
+        setSubmitted(false);
+      });
   };
 
   const editProduct = (product) => {};
@@ -211,7 +220,8 @@ export const Order = () => {
   const leftToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <span className="p-input-icon-left">
+        <div style={{ marginLeft: "1em" }}>
+          <label>Order Status </label>
           <Dropdown
             value={orderStatusFilter}
             id="id"
@@ -220,9 +230,12 @@ export const Order = () => {
             onChange={(event) => onOrderStatusChange(event)}
             optionLabel="name"
             placeholder="Select Order Status"
+            style={{ marginLeft: "1em" }}
           />
-        </span>
-        <span className="p-input-icon-left">
+        </div>
+
+        <div style={{ marginLeft: "1em" }}>
+          <label>Supplier Name </label>
           <Dropdown
             value={supplierFilter}
             options={supliers}
@@ -231,7 +244,7 @@ export const Order = () => {
             placeholder="Select Supplier"
             style={{ marginLeft: "1em" }}
           />
-        </span>
+        </div>
       </React.Fragment>
     );
   };
@@ -250,14 +263,9 @@ export const Order = () => {
     return (
       <React.Fragment>
         <Button
-          icon="pi pi-pencil"
-          className="p-button p-button-success mr-2"
+          label="Process Order"
+          className="p-button p-button-warning mr-2"
           onClick={() => handleProcessOrder(rowData)}
-        />
-        <Button
-          icon="pi pi-trash"
-          className="p-button p-button-warning"
-          onClick={() => confirmDeleteProduct(rowData)}
         />
       </React.Fragment>
     );
