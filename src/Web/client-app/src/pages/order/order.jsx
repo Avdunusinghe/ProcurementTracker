@@ -122,7 +122,9 @@ export const Order = () => {
     setDeleteProductsDialog(false);
   };
 
-  const processOrder = () => {};
+  const processOrder = () => {
+    setSubmitted(true);
+  };
 
   const editProduct = (product) => {};
 
@@ -144,8 +146,8 @@ export const Order = () => {
 
   const handleProcessOrder = (rowData) => {
     let model = rowData;
-    model.id = rowData._id;
-
+    model.id = rowData.id;
+    console.log(model);
     setOrder({ ...model });
     setOrderDialog(true);
   };
@@ -306,7 +308,7 @@ export const Order = () => {
       <Dialog
         visible={orderDialog}
         style={{ width: "800px" }}
-        header="Product Details"
+        header="Order Details"
         modal
         className="p-fluid"
         footer={orderDialogFooter}
@@ -355,8 +357,8 @@ export const Order = () => {
         <div className="field">
           <label htmlFor="referenceId">Order Status </label>
           <Dropdown
-            id="supplierId"
-            name="supplierId"
+            id="orderStatus"
+            name="orderStatus"
             value={order.orderStatus}
             options={orderStatus}
             optionLabel="name"
