@@ -180,6 +180,33 @@ namespace ProcurementTracker.Infrastructure.Services
 
         }
 
+        public async Task<PurchaseRequestContainerDTO> GetPurchaseRequestById(long id, CancellationToken cancellationToken)
+        {
+            var purchaseRequest = new PurchaseRequestContainerDTO();
+
+            var request = await _mediator.Send(new GetPurchaseRequestByIdQuery(id));
+
+            purchaseRequest.Id = request.Id;
+            purchaseRequest.SupplierId = request.SupplierId;
+            purchaseRequest.SupplierName = request.Supplier.SupplierName;
+            purchaseRequest.RequiredDeliveryDate = request.RequiredDeliveryDate;
+            purchaseRequest.StatusChangedByName = request.StatusChangedBy.FirstName;
+            purchaseRequest.TotalPrice = request.TotalPrice;
+            purchaseRequest.CreatedDate = request.Created;
+
+            foreach (var product in request.PurchaseRequestProductItems)
+            {
+                purchaseRequest.PurchaseRequestProductItems.Add(new PurchaseRequestProductItemDTO()
+                {
+                    ProductId = product.ProductId,
+                    ProductName = product.Product.Name,
+                    NumberOfItem = product.NumberOfItem,
+                });
+            }
+
+            return purchaseRequest;
+        }
+
         public async Task<ResultDTO> SaveOrder(OrderDTO orderDTO, CancellationToken cancellationToken)
         {
             var response = new ResultDTO();
