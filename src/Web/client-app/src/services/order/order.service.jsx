@@ -9,6 +9,13 @@ class OrderService {
   saveOrder(order) {
     return axios.post(`${environment.apiUrl}Order/saveOrder`, order);
   }
+
+  saveRequest(request) {
+    return axios.post(
+      `${environment.apiUrl}Order/savePurchaseRequest`,
+      request
+    );
+  }
 }
 
 export default new OrderService();
