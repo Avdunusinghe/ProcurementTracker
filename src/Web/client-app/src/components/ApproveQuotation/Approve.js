@@ -7,14 +7,12 @@ constructor(props) {
     super(props);
     this.state = {
     id:'',
-      productName: "",
-      numberOfItem: "",
-      
+    productName: "",
+    numberOfItem: "",
     };
   }
 
   
-
 
  handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +24,8 @@ constructor(props) {
 
   }
 
+
+  
   onSubmit = (e) => {
 
     e.preventDefault();
