@@ -16,6 +16,10 @@ class OrderService {
       request
     );
   }
+getPurchesById(id) {
+    return axios.get(`${environment.apiUrl}Order/getPurchaseRequestById/` +id);
+  }
+
 }
 
 export default new OrderService();
