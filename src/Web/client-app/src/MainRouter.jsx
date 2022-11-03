@@ -16,7 +16,7 @@ export default class MainRouter extends Component {
           <NavBar />
 
        
-        <Route path="/approve" exact component={Approve}></Route>
+        <Route path="/approve/:id" exact component={Approve}></Route>
         
 
         <Route path="/" exact component={Authentication} />

@@ -1,15 +1,39 @@
 import React, { Component } from 'react';
+import masterDataService from "../../services/masterData/master.data.service";
 import axios from 'axios';
+import orderService from '../../services/order/order.service';
 
 export default class Approve extends Component {
 
 constructor(props) {
     super(props);
+    console.log(
+      this.props.match.params.id
+    )
+
     this.state = {
-    id:'',
+    products: [],
+    purchaseRequest : null,
     productName: "",
     numberOfItem: "",
+    productId: 0,
     };
+
+
+  }
+
+   componentDidMount() {
+    this.getProduts();
+  }
+
+  getProduts() {
+    masterDataService.getProductMasterData().then((response) => {
+      this.setState({
+        products: response.data,
+      });
+
+      this.getSupplier();
+    });
   }
 
   
@@ -24,6 +48,15 @@ constructor(props) {
 
   }
 
+getPurchesById = (id) => {
+ orderService.getPurchesById(id).then((response) => {
+  console.log (response.data)
+  this.setState({
+     purchaseRequest: response.data,
+  })
+ })
+}
+
 
   
   onSubmit = (e) => {
@@ -31,55 +64,42 @@ constructor(props) {
     e.preventDefault();
     const id = this.props.match.params.id;
 
-    const {  productName, numberOfItem} = this.state;
+    const { productId, productName, numberOfItem} = this.state;
 
     const data = {
+      productId:  0,
       productName: productName,
       numberOfItem: numberOfItem,
       
-
     }
 
     console.log(data)
-    
-    axios.put(`https://localhost:7088/api/Order/savePurchaseRequest`, {'purchaseRequest.Id':0}).then((res) => {
-      if (res.data) {
 
-        alert("Update Successful", "Update is recorder", "success");
-        this.setState(
-          {
-            id:"",
-            productName: "",
-        numberOfItem: "",
+
+    
+    // axios.put(`https://localhost:7088/api/Order/savePurchaseRequest`, {'purchaseRequest.Id':0}).then((res) => {
+    //   if (res.data) {
+
+    //     alert("Update Successful", "Update is recorder", "success");
+    //     this.setState(
+    //       {
+    //         id:"",
+    //         productName: "",
+    //     numberOfItem: "",
           
 
-          }
-        )
-      }
-    })
+    //       }
+    //     )
+    //   }
+    // })
   
-  }
+  };
 
   componentDidMount() {
 
     const id = this.props.match.params.id;
 
-
-    axios.get("https://localhost:7088/api/Order/getPurchaseRequests", {"purchaseRequestStatus": 1}).then((res) => {
-
-      if (res.data.success) {
-        this.setState({
-
-        Id:res.data.post.Id,
-          productName: res.data.post.productName,
-          numberOfItem: res.data.post.numberOfItem,
-         
-
-        });
-
-        console.log(this.state.post);
-      }
-    })
+    this.getPurchesById(id)
 
   }
 
@@ -93,14 +113,7 @@ constructor(props) {
     <form style={{ backgroundColor: '#bbbec4'}}>
   <div class="row">
     <div class="col">
-      {/* <input   style={{width:'220px', marginTop:'60px', marginLeft:'200px'  }} 
-      type="text" 
-      class="form-control" 
-      name=" productName" 
-      value={this.state. productName}
-			onChange={this.handleInputChange}
-      placeholder="Material"/> */}
-     <div class="dropdown"  style={{width:'280px', marginTop:'60px', marginLeft:'230px'  }} >
+    {/* <div class="dropdown"  style={{width:'280px', marginTop:'60px', marginLeft:'230px'  }} >
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Material
   </button>
@@ -109,7 +122,33 @@ constructor(props) {
     <a class="dropdown-item" href="#"> </a>
     <a class="dropdown-item" href="#"> </a>
   </div>
-</div>
+</div> */}
+ <div
+                    style={{
+                      width: "560px",
+                      marginTop: "40px",
+                      marginLeft: "80px",
+                    }}
+                  >
+                    <div class="col">
+                      <label for="exampleFormControlSelect1">
+                        <b>Material</b>
+                      </label>
+                      <select
+                        class="form-select"
+                        name="productId"
+                        value={this.state.productId}
+                        onChange={this.handleInputChange}
+                      >
+                        <option selected>Please Select</option>
+                        {this.state.products.map((product, index) => (
+                          <option key={product.id} value={product.id}>
+                            {product.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
     </div>
    
     <div class="col"> 
