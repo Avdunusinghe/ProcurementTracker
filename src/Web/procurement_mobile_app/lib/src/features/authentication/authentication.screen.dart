@@ -100,8 +100,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
   Future<void> login(String email, String password) async {
     print(email);
     final loginModel = AuthenticationModel(userName: email, password: password);
+    final res = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
+
+    print(res.body);
     final response = await http.post(
-        Uri.parse("https://10.0.2.2:7088/Authentication/login"),
+        Uri.parse("https://localhost:7088/api/Authentication/login"),
         body: json.encode({
           "userName": loginModel.userName,
           "password": loginModel.password,
@@ -109,7 +113,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         });
-
+    print("sdsdsadasdasdasd" + response.body);
     final currentUserModel = jsonDecode(response.body);
 
     final storage = new FlutterSecureStorage();
