@@ -10,8 +10,11 @@ constructor(props) {
       productName: "",
       numberOfItem: "",
       
-    }
+    };
   }
+
+  
+
 
  handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -87,28 +90,63 @@ constructor(props) {
     <div style={{marginLeft: '550px'}}>
 <h3 style={{marginLeft:'40px', marginTop:"20px", }}><b>Recieved Quotation</b></h3>
 </div>
-    <form>
+    <form style={{ backgroundColor: '#bbbec4'}}>
   <div class="row">
     <div class="col">
-      <input   style={{width:'220px', marginTop:'60px', marginLeft:'200px'  }} type="text" class="form-control" name=" productName" value={this.state. productName}
-													onChange={this.handleInputChange}
-placeholder="Material"/>
+      {/* <input   style={{width:'220px', marginTop:'60px', marginLeft:'200px'  }} 
+      type="text" 
+      class="form-control" 
+      name=" productName" 
+      value={this.state. productName}
+			onChange={this.handleInputChange}
+      placeholder="Material"/> */}
+     <div class="dropdown"  style={{width:'280px', marginTop:'60px', marginLeft:'230px'  }} >
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Material
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#"> </a>
+    <a class="dropdown-item" href="#"> </a>
+    <a class="dropdown-item" href="#"> </a>
+  </div>
+</div>
     </div>
-    <div class="col">
-      <input   style={{width:'220px', marginTop:'60px', marginLeft:'75px'  }} type="text" class="form-control" placeholder="Qty"  name="numberOfItem" value={this.state. numberOfItem}
-													onChange={this.handleInputChange}/>
+   
+    <div class="col"> 
+      <input   style={{width:'220px', marginTop:'60px', marginLeft:'75px'  }} 
+      type="text" 
+      class="form-control" 
+      placeholder="Qty" 
+      name="numberOfItem" 
+      value={this.state. numberOfItem}
+			onChange={this.handleInputChange}/>
     </div>
+
     <div class="col">
-      <input   style={{width:'220px', marginTop:'60px', marginLeft:'0px'  }} type="text" class="form-control" placeholder="Delievery State "/>
+      <input   style={{width:'220px', marginTop:'60px', marginLeft:'0px'  }} 
+      type="text" 
+      class="form-control" 
+      placeholder=" Estimate Cost "/>
     </div>
   </div>
-   <input   style={{width:'220px', marginTop:'60px', marginLeft:'600px'  }} type="text" class="form-control" placeholder=" Estimate Cost"/>
+{/* 
+   <input   style={{width:'220px', marginTop:'60px', marginLeft:'615px'  }} 
+   type="text"
+   class="form-control" 
+   placeholder=" Estimate Cost"/> */}
+
+   
+  <br></br>
+  <br></br>
+   <button style={{marginLeft: '670px',}} class="btn btn-primary" type="submit">Update</button>
+ <br></br>
+  <br></br>
 </form>
 </div>
 <div style={{marginLeft: '550px', marginTop:"20px"}}>
 <h3 style={{marginLeft:'40px', marginTop:"10px"}}><b>Approve Quotation</b></h3>
 </div>
-<form    style={{width:'520px', height:'70px', marginLeft:'500px', marginTop:'100px'}}>
+<form    style={{width:'520px', height:'70px', marginLeft:'500px', marginTop:'100px',}}>
   <div class="form-group">
     
     {/* <label for="exampleFormControlInput1">Email address</label>
@@ -124,19 +162,19 @@ placeholder="Material"/>
   <option>Default select</option>
 </select>
   </div>
+
   <div class="form-group">
     <label for="exampleFormControlSelect2"><b>Site Address</b></label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-
   </div>
+
   <div class="form-group">
     <label for="exampleFormControlTextarea1"><b>Remark</b></label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-   
   </div>
+
     <button class="btn btn-primary" type="submit">Submit form</button>
 </form>
- 
       </div>
     )
   }

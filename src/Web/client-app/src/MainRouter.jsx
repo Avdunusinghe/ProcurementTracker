@@ -14,15 +14,11 @@ export default class MainRouter extends Component {
         <BrowserRouter>
           <div>
           <NavBar />
-
-
-
-
         <Route path="/approve" exact component={Approve}></Route>
         </div>
        
           <Route path="/" exact component={Order} />
-          <Route path="/quatation" exact component={pendingQuatation} />
+          <Route path="/quotation" exact component={pendingQuatation} />
 
         </BrowserRouter>
       
