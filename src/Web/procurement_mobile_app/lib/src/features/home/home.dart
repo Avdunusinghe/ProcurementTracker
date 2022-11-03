@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:procurement_mobile_app/src/common_widgets/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:procurement_mobile_app/src/features/authentication/authentication.screen.dart';
 import 'package:procurement_mobile_app/src/features/common_dashboard/common_dashboard.dart';
+import 'package:procurement_mobile_app/src/features/order/save.order.screen.dart';
 import 'package:procurement_mobile_app/src/features/procurement_app_theme.dart';
 import 'package:procurement_mobile_app/src/models/tabIcon_data.dart';
 
@@ -28,7 +30,7 @@ class _AppModuleScreenState extends State<AppModuleScreen>
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = CommonDashboard(animationController: animationController);
+    tabBody = SaveOrderScreen(animationController: animationController);
     super.initState();
   }
 
@@ -53,7 +55,7 @@ class _AppModuleScreenState extends State<AppModuleScreen>
               return Stack(
                 children: <Widget>[
                   tabBody,
-                  bottomBar(),
+                  //bottomBar(),
                 ],
               );
             }

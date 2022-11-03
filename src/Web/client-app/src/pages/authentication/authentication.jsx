@@ -43,6 +43,14 @@ export const Authentication = () => {
     console.log(authenticationModel);
     authenticationService.login(authenticationModel).then((response) => {
       console.log(response);
+      if (response.data.isLoginSuccess) {
+        const currentUser = {
+          token: response.data.token,
+          email: response.data.email,
+          userId: response.data.userId,
+        };
+        localStorage.setItem("CSSEcurrentUser", JSON.stringify(currentUser));
+      }
     });
   };
 
@@ -65,96 +73,120 @@ export const Authentication = () => {
   );
 
   return (
-    <div className="form-demo">
-      <Dialog
-        visible={showMessage}
-        onHide={() => setShowMessage(false)}
-        position="top"
-        footer={dialogFooter}
-        showHeader={false}
-        breakpoints={{ "960px": "80vw" }}
-        style={{ width: "30vw" }}
+    <div>
+      <div
+        style={{
+          backgroundImage:
+            'url("https://cdn.pixabay.com/photo/2018/02/02/11/02/logistics-3125136_960_720.jpg")',
+          backgroundSize: "cover",
+        }}
       >
-        <div className="p-d-flex p-ai-center p-dir-col p-pt-6 p-px-3">
-          <i
-            className="pi pi-check-circle"
-            style={{ fontSize: "5rem", color: "var(--green-500)" }}
-          ></i>
-          <h5>Registration Successful!</h5>
-          <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
-            Your account is registered under name <b>{formData.name}</b>
-            it'll be valid next 30 days without activation. Please check{" "}
-            <b>{formData.email}</b> for activation instructions.
-          </p>
-        </div>
-      </Dialog>
+        <div className="form-demo">
+          <br />
+          <br />
+          <Dialog
+            visible={showMessage}
+            onHide={() => setShowMessage(false)}
+            position="top"
+            footer={dialogFooter}
+            showHeader={false}
+            breakpoints={{ "960px": "80vw" }}
+            style={{ width: "30vw" }}
+          >
+            <div className="p-d-flex p-ai-center p-dir-col p-pt-6 p-px-3">
+              <i
+                className="pi pi-check-circle"
+                style={{ fontSize: "5rem", color: "var(--green-500)" }}
+              ></i>
+              <h5>Registration Successful!</h5>
+              <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
+                Your account is registered under name <b>{formData.name}</b>
+                it'll be valid next 30 days without activation. Please check{" "}
+                <b>{formData.email}</b> for activation instructions.
+              </p>
+            </div>
+          </Dialog>
 
-      <div className="p-d-flex p-jc-center">
-        <div className="card">
-          <h5 className="p-text-center">Register</h5>
-          <Form
-            onSubmit={onSubmit}
-            initialValues={{ email: "", password: "" }}
-            validate={validate}
-            render={({ handleSubmit }) => (
-              <form onSubmit={handleSubmit} className="p-fluid">
-                <Field
-                  name="email"
-                  render={({ input, meta }) => (
-                    <div className="p-field">
-                      <span className="p-float-label p-input-icon-right">
-                        <i className="pi pi-envelope" />
-                        <InputText
-                          id="email"
-                          {...input}
-                          className={classNames({
-                            "p-invalid": isFormFieldValid(meta),
-                          })}
-                        />
-                        <label
-                          htmlFor="email"
-                          className={classNames({
-                            "p-error": isFormFieldValid(meta),
-                          })}
-                        >
-                          Email*
-                        </label>
-                      </span>
-                      {getFormErrorMessage(meta)}
-                    </div>
-                  )}
+          <div className="p-d-flex p-jc-center">
+            <div className="Form">
+              <br />
+              <br />
+              <br />
+
+              <h1 className="p-text-center">
+                <img
+                  src="https://www.pngall.com/wp-content/uploads/5/Account-Login-Button-PNG-Clipart.png"
+                  style={{ height: "100px" }}
                 />
-                <Field
-                  name="password"
-                  render={({ input, meta }) => (
-                    <div className="p-field">
-                      <span className="p-float-label">
-                        <Password
-                          id="password"
-                          {...input}
-                          toggleMask
-                          className={classNames({
-                            "p-invalid": isFormFieldValid(meta),
-                          })}
-                          feedback={false}
-                        />
-                        <label
-                          htmlFor="password"
-                          className={classNames({
-                            "p-error": isFormFieldValid(meta),
-                          })}
-                        >
-                          Password*
-                        </label>
-                      </span>
-                      {getFormErrorMessage(meta)}
-                    </div>
-                  )}
-                />
-                <Button type="submit" label="Submit" className="p-mt-2" />
-              </form>
-            )}
-          />
+              </h1>
+              <br />
+              <br />
+              <Form
+                onSubmit={onSubmit}
+                initialValues={{ email: "", password: "" }}
+                validate={validate}
+                render={({ handleSubmit }) => (
+                  <form onSubmit={handleSubmit} className="p-fluid">
+                    <Field
+                      name="email"
+                      render={({ input, meta }) => (
+                        <div className="p-field">
+                          <span className="p-float-label p-input-icon-right">
+                            <i className="pi pi-envelope" />
+                            <InputText
+                              id="email"
+                              {...input}
+                              className={classNames({
+                                "p-invalid": isFormFieldValid(meta),
+                              })}
+                            />
+                            <label
+                              htmlFor="email"
+                              className={classNames({
+                                "p-error": isFormFieldValid(meta),
+                              })}
+                            >
+                              Email*
+                            </label>
+                          </span>
+                          {getFormErrorMessage(meta)}
+                        </div>
+                      )}
+                    />
+                    <Field
+                      name="password"
+                      render={({ input, meta }) => (
+                        <div className="p-field">
+                          <span className="p-float-label">
+                            <Password
+                              id="password"
+                              {...input}
+                              toggleMask
+                              className={classNames({
+                                "p-invalid": isFormFieldValid(meta),
+                              })}
+                              feedback={false}
+                            />
+                            <label
+                              htmlFor="password"
+                              className={classNames({
+                                "p-error": isFormFieldValid(meta),
+                              })}
+                            >
+                              Password*
+                            </label>
+                          </span>
+                          {getFormErrorMessage(meta)}
+                        </div>
+                      )}
+                    />
+                    <Button type="submit" label="Login" className="p-mt-2" />
+                    <div style={{ marginTop: "80%" }}></div>
+                  </form>
+                )}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

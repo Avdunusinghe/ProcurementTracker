@@ -16,6 +16,7 @@ namespace ProcurementTracker.Application.Common.Interfaces
         Task<ResultDTO> SavePurchaseRequest(PurchaseRequestDTO purchaseRequestDTO, CancellationToken cancellationToken);
         Task<List<PurchaseRequestContainerDTO>> GetAllPurchaseRequest(PurchaseRequestFilterDTO filter, CancellationToken cancellationToken);
         Task<ResultDTO> AcceptPurchaseRequest(PurchaseRequestDTO purchaseRequestDTO, CancellationToken cancellationToken);
+        Task<PurchaseRequestContainerDTO> GetPurchaseRequestById(long id, CancellationToken cancellationToken);
 
     }
 }

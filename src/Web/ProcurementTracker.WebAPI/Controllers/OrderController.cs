@@ -38,6 +38,7 @@ namespace ProcurementTracker.WebAPI.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpPost("getOrders")]
         public async Task<IActionResult>GetAllOrders([FromBody] GetAllOrderQueryFilterAsyncCommand getAllOrderQueryFilterAsync)
         {
@@ -58,6 +59,14 @@ namespace ProcurementTracker.WebAPI.Controllers
         public async Task<IActionResult> AcceptPurchaseRequest([FromBody] AcceptPurchaseRequestCommand acceptPurchaseRequestCommand)
         {
             var response = await _mediator.Send(acceptPurchaseRequestCommand);
+
+            return Ok(response);
+        }
+
+        [HttpGet("getPurchaseRequestById/{id:long}")]
+        public async Task<IActionResult> GetPurchaseRequestById(long id)
+        {
+            var response = await _mediator.Send(new GetPurchaseRequestByIdFilterQuery(id));
 
             return Ok(response);
         }
