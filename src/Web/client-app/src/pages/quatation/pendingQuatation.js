@@ -104,7 +104,7 @@ export default class pendingQuatation extends Component {
 									
 
 									<td>
-										<a className="btn btn-primary" href={`/approve/${posts._id}`}>
+										<a className="btn btn-primary" href={`/approve/${posts.id}`}>
 											<i className="fas fa-eye"> Proceed</i>
 										</a>
 										&nbsp;

@@ -30,7 +30,7 @@ class _AppModuleScreenState extends State<AppModuleScreen>
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = SaveOrderScreen(animationController: animationController);
+    tabBody = AuthenticationScreen(animationController: animationController);
     super.initState();
   }
 
