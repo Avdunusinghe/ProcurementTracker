@@ -22,7 +22,7 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
     public class OrderServiceTests
     {
         [TestMethod()]
-        public  async Task SaveOrderTest_Success()
+        public async Task SaveOrderTest_Success()
         {
             var cancellationToken = new CancellationToken();
             var orderDTO = new OrderDTO()
@@ -33,7 +33,7 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
                 ShippingDate = DateTime.Now,
                 IsProceesed = true,
                 OrderStatus = (Domain.Enums.OrderStatus)1,
-                
+
 
 
             };
@@ -48,7 +48,7 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
 
             var mediator = new Mock<IMediator>();
             var currentUserService = new Mock<ICurrentUserService>();
-       
+
             var order = new Order()
             {
                 Id = 1,
@@ -65,14 +65,14 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
             order.OrderItems = new HashSet<OrderItem>();
 
             order.OrderItems.Add(new OrderItem()
-            {   
+            {
                 OrderId = order.Id,
                 ProductId = 1,
                 NumberOfItems = 45,
                 Id = 1
             });
 
-            
+
 
             mediator.Setup(x => x.Send(new GetOrderByIdQuery(orderDTO.Id), It.IsAny<CancellationToken>()))
               .Returns(Task.FromResult<Order>(null));
@@ -104,7 +104,7 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
                 });
             }
 
-            mediator.Setup(x => x.Send(new CreateOrderCommand() {Order = newOrder }, It.IsAny<CancellationToken>()));
+            mediator.Setup(x => x.Send(new CreateOrderCommand() { Order = newOrder }, It.IsAny<CancellationToken>()));
 
 
             var orderService = new OrderService(mediator.Object, currentUserService.Object);
@@ -112,7 +112,7 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
 
 
             Assert.IsTrue(response.IsSuccess);
-           
+
         }
 
         [TestMethod()]
@@ -178,7 +178,7 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
             order.ShippingAddress = "ABC";
             order.OrderStatus = orderDTO.OrderStatus;
 
-            
+
 
             mediator.Setup(x => x.Send(new EditOrderCommand() { Order = order }, It.IsAny<CancellationToken>()));
 
@@ -192,6 +192,11 @@ namespace ProcurementTracker.Infrastructure.Services.Tests
 
         }
 
-       
+        [TestMethod()]
+        public async Task SavePurchaseRequestTest()
+        {
+            var cancellationToken = new CancellationToken();
+
+        }
     }
 }
