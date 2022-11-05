@@ -141,6 +141,7 @@ export default class Approve extends Component {
               </div>
 
               <div class="col">
+                
                 <input
                   style={{
                     width: "220px",
@@ -160,6 +161,7 @@ export default class Approve extends Component {
               </div>
 
               <div class="col">
+                
                 <input
                   style={{
                     width: "220px",
@@ -242,7 +244,12 @@ export default class Approve extends Component {
               id="exampleFormControlTextarea1"
               rows="3"
             ></textarea>
+
+
+            
           </div>
+
+          
 
           <button class="btn btn-primary" type="submit">
             Submit form
