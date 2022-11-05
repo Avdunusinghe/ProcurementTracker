@@ -46,11 +46,14 @@ namespace ProcurementTracker.Infrastructure
             services.AddTransient<IOrderQueryRepository, OrderQueryRepository>();
             services.AddTransient<IProductQueryRepository, ProductQueryRepository>();
             services.AddTransient<IPurchaseRequestQueryRepository, PurchaseRequestQueryRepository>();
+            services.AddTransient<IPurchaseRequestProductItemQueryRepository, PurchaseRequestProductItemQueryRepository>();
+
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
             services.AddTransient<IUserCommandRepository, UserCommandRepository>();
             services.AddTransient<IOrderCommandRepository, OrderCommandRepository>();
             services.AddTransient<IPurchaseRequestCommandRepository, PurchaseRequestCommandRepository>();
+            services.AddTransient<IPurchaseRequestProductItemCommandRepository, PurchaseRequestProductItemCommandRepository>();
 
 
             services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Infrastructure\ProcurementTracker.Infrastructure\ProcurementTracker.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Web\ProcurementTracker.WebAPI\ProcurementTracker.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>
