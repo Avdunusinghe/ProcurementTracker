@@ -9,6 +9,8 @@ using ProcurementTracker.Application.Orders.Command;
 using ProcurementTracker.Application.Orders.Query;
 using ProcurementTracker.Application.PurchaseRequests.Command;
 using ProcurementTracker.Application.PurchaseRequests.Query;
+using ProcurementTracker.Application.PurchaseRequestsItems.Command;
+using ProcurementTracker.Application.PurchaseRequestsItems.Query;
 using ProcurementTracker.Domain.Entities;
 using ProcurementTracker.Domain.Enums;
 
@@ -103,7 +105,7 @@ namespace ProcurementTracker.Infrastructure.Services
                 order.ReferenceId = item.ReferenceId;
                 order.IsProceesed = item.IsProceesed;
                 order.ShippingDate = item.ShippingDate;
-                order.OrderByName = item.OrderBy.FirstName;
+                order.OrderByName = item.CreatedBy.FirstName;
                 order.OrderStatus = item.OrderStatus;
                 order.OrderStatusResult = EnumHelper.GetEnumDescription((OrderStatus)item.OrderStatus);  
                 order.SupplierName = item.Supplier.SupplierName;
@@ -228,7 +230,7 @@ namespace ProcurementTracker.Infrastructure.Services
                         ShippingDate = orderDTO.ShippingDate,
                         ShippingAddress = "ABC",
                         OrderStatus = orderDTO.OrderStatus,
-                        OrderByUserId = _currentUserService.UserId!.Value,
+                        OrderByUserId = 1
 
                     };
 
@@ -282,7 +284,7 @@ namespace ProcurementTracker.Infrastructure.Services
                response.Message = "Error has been Occured Please Try again";
             }
            
-            return response;
+             return response;
         }
 
         public async Task<ResultDTO> SavePurchaseRequest(PurchaseRequestDTO purchaseRequestDTO, CancellationToken cancellationToken)
@@ -291,34 +293,36 @@ namespace ProcurementTracker.Infrastructure.Services
 
             try
             {
+                var purchaseRequest = await _mediator.Send(new GetPurchaseRequestByIdQuery(purchaseRequestDTO.Id));
 
-                var purchaseRequest = new PurchaseRequest()
+                if(purchaseRequest == null)
                 {
-                    PurchaseRequestStatus = purchaseRequestDTO.PurchaseRequestStatus,
-                    RequiredDeliveryDate = purchaseRequestDTO.RequiredDeliveryDate,
-                    Description = purchaseRequestDTO.Description,
-                    SupplierId = purchaseRequestDTO.SupplierId,
-                    IsActive = true,
-                    TotalPrice = purchaseRequestDTO.TotalPrice,
-                    StatusChangedById = _currentUserService.UserId!.Value
-
-                };
-
-                purchaseRequest.PurchaseRequestProductItems = new HashSet<PurchaseRequestProductItem>();
-
-                foreach (var item in purchaseRequestDTO.PurchaseRequestProductItems)
-                {
-                    var purchaseRequestProductItem = new PurchaseRequestProductItem()
+                    purchaseRequest = new PurchaseRequest()
                     {
-                        ProductId = item.ProductId,
-                        NumberOfItem = item.NumberOfItem,
-                        PurchaseRequestId = purchaseRequest.Id
+                        PurchaseRequestStatus = purchaseRequestDTO.PurchaseRequestStatus,
+                        RequiredDeliveryDate = purchaseRequestDTO.RequiredDeliveryDate,
+                        Description = purchaseRequestDTO.Description,
+                        SupplierId = purchaseRequestDTO.SupplierId,
+                        IsActive = true,
+                        TotalPrice = purchaseRequestDTO.TotalPrice,
+                        StatusChangedById = _currentUserService.UserId!.Value
+
                     };
 
-                    purchaseRequest.PurchaseRequestProductItems.Add(purchaseRequestProductItem);
-                }
-                if(purchaseRequestDTO.Id == 0)
-                {
+                    purchaseRequest.PurchaseRequestProductItems = new HashSet<PurchaseRequestProductItem>();
+
+                    foreach (var item in purchaseRequestDTO.PurchaseRequestProductItems)
+                    {
+                        var purchaseRequestProductItem = new PurchaseRequestProductItem()
+                        {
+                            ProductId = item.ProductId,
+                            NumberOfItem = item.NumberOfItem,
+                            PurchaseRequestId = purchaseRequest.Id
+                        };
+
+                        purchaseRequest.PurchaseRequestProductItems.Add(purchaseRequestProductItem);
+                    }
+
                     await _mediator.Send(new CreatePurchaseRequestCommand()
                     {
                         PurchaseRequest = purchaseRequest
@@ -329,6 +333,45 @@ namespace ProcurementTracker.Infrastructure.Services
                 }
                 else
                 {
+                    purchaseRequest.TotalPrice = purchaseRequestDTO.TotalPrice;
+
+                    var purchaseRequestProductItem = await _mediator.Send(new PurchaseRequestProductItemGetByRequestIdQuery(purchaseRequest.Id));
+
+
+
+                    foreach(var item in purchaseRequestDTO.PurchaseRequestProductItems)
+                    {
+                        if(purchaseRequestProductItem.Id != item.Id)
+                        {
+                           await  _mediator.Send(new DeletePurchaseRequestProductItemCommand(purchaseRequestProductItem.Id));
+
+                            var newPurchaseRequestProductItem = new PurchaseRequestProductItem()
+                            {
+                                PurchaseRequestId = purchaseRequest.Id,
+                                ProductId = item.ProductId,
+                                NumberOfItem = item.NumberOfItem,
+
+                            };
+
+                            await _mediator.Send(new CreatePurchaseRequestProductItemCommand()
+                            {
+                                PurchaseRequestProdcuctItem = newPurchaseRequestProductItem
+                            });
+                        }
+                        else
+                        {
+                            purchaseRequestProductItem.ProductId = item.ProductId;
+                            purchaseRequestProductItem.NumberOfItem = item.NumberOfItem;
+                            purchaseRequestProductItem.PurchaseRequestId = purchaseRequest.Id;
+
+                            await _mediator.Send(new EditPurchaseRequestProductItemCommand()
+                            {
+                                PurchaseRequestProductItem = purchaseRequestProductItem,
+                            });
+                           
+                        }
+                    }
+
                     await _mediator.Send(new EditPurchaseRequestCommand()
                     {
                         PurchaseRequest = purchaseRequest
