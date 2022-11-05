@@ -13,6 +13,8 @@ namespace ProcurementTracker.Application.Common.Pipelines.PurchaseRequest.Comman
 {
     public record SavePurchaseRequestCommand : IRequest<ResultDTO>
     {
+       
+        public long Id { get; set; }
         public long ProductId { get; set; }
         public PurchaseRequestStatus PurchaseRequestStatus { get; set; }
         public DateTime RequiredDeliveryDate { get; set; }

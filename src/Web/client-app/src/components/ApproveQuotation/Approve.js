@@ -22,6 +22,7 @@ export default class Approve extends Component {
         createdDate: "",
         purchaseRequestProductItems: [
           {
+            id: 0,
             productId: 0,
             productName: "",
             numberOfItem: 0,
@@ -30,8 +31,9 @@ export default class Approve extends Component {
         ],
       },
       productName: "",
-      numberOfItem: "",
+      numberOfItem: 0,
       productId: 0,
+      totalPrice: 0,
     };
   }
 
@@ -63,7 +65,6 @@ export default class Approve extends Component {
 
   getPurchesById = (id) => {
     orderService.getPurchesById(id).then((response) => {
-      console.log(response.data);
       this.setState({
         purchaseRequest: response.data,
       });
@@ -75,16 +76,36 @@ export default class Approve extends Component {
   };
 
   onSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const id = this.props.match.params.id;
 
-    const { productId, productName, numberOfItem } = this.state;
+    const { purchaseRequest, productId, numberOfItem, totalPrice } = this.state;
 
-    const data = {
-      productId: 0,
-      productName: productName,
-      numberOfItem: numberOfItem,
+    const purchaseRequestModel = {
+      id: purchaseRequest.id,
+      productId: purchaseRequest.purchaseRequestProductItems[0].productId,
+      purchaseRequestStatus: 1,
+      requiredDeliveryDate: purchaseRequest.requiredDeliveryDate,
+      description: purchaseRequest.description,
+      supplierId: purchaseRequest.supplierId,
+      totalPrice: totalPrice,
+      statusChangedBy: "string",
+      purchaseRequestProductItems: [
+        {
+          id: 0,
+          productId: productId,
+          productName: "string",
+          numberOfItem: numberOfItem,
+          purchaseRequestId: purchaseRequest.id,
+        },
+      ],
     };
+
+    console.log(purchaseRequestModel);
+    orderService.saveRequest(purchaseRequestModel).then((response) => {
+      console.log(response.data);
+      localStorage.setItem("purchaseRequest", JSON.stringify(response.data));
+    });
   };
 
   render() {
@@ -96,7 +117,7 @@ export default class Approve extends Component {
               <b>Recieved Quotation</b>
             </h3>
           </div>
-          <form style={{ backgroundColor: "#bbbec4" }}>
+          <form onSubmit={this.onSubmit} style={{ backgroundColor: "#bbbec4" }}>
             <div class="row">
               <div class="col">
                 {/* <div class="dropdown"  style={{width:'280px', marginTop:'60px', marginLeft:'230px'  }} >
@@ -141,7 +162,6 @@ export default class Approve extends Component {
               </div>
 
               <div class="col">
-                
                 <input
                   style={{
                     width: "220px",
@@ -161,7 +181,6 @@ export default class Approve extends Component {
               </div>
 
               <div class="col">
-                
                 <input
                   style={{
                     width: "220px",
@@ -172,6 +191,7 @@ export default class Approve extends Component {
                   class="form-control"
                   placeholder=" Estimate Cost "
                   value={this.state.purchaseRequest.totalPrice}
+                  onChange={this.handleInputChange}
                 />
               </div>
             </div>
@@ -244,12 +264,7 @@ export default class Approve extends Component {
               id="exampleFormControlTextarea1"
               rows="3"
             ></textarea>
-
-
-            
           </div>
-
-          
 
           <button class="btn btn-primary" type="submit">
             Submit form

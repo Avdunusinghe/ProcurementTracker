@@ -200,6 +200,7 @@ namespace ProcurementTracker.Infrastructure.Services
             {
                 purchaseRequest.PurchaseRequestProductItems.Add(new PurchaseRequestProductItemDTO()
                 {
+                    Id = product.Id,
                     ProductId = product.ProductId,
                     ProductName = product.Product.Name,
                     NumberOfItem = product.NumberOfItem,
