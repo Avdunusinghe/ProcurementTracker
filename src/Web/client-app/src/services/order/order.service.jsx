@@ -20,10 +20,6 @@ class OrderService {
   getPurchesById(id) {
     return axios.get(`${environment.apiUrl}Order/getPurchaseRequestById/` + id);
   }
-
-  savepurchaseRequest(model) {
-    return axios.post(`${environment.apiUrl}Order/savePurchaseRequest`, model);
-  }
 }
 
 export default new OrderService();

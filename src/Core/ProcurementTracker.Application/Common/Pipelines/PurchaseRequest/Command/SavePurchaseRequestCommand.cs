@@ -38,6 +38,7 @@ namespace ProcurementTracker.Application.Common.Pipelines.PurchaseRequest.Comman
         {
             var purchaseRequestDTO = new PurchaseRequestDTO()
             {
+                Id = request.Id,
                 ProductId = request.ProductId,
                 PurchaseRequestStatus = request.PurchaseRequestStatus,
                 RequiredDeliveryDate = request.RequiredDeliveryDate,

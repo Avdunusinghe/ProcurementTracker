@@ -338,9 +338,12 @@ namespace ProcurementTracker.Infrastructure.Services
 
                     var purchaseRequestProductItem = await _mediator.Send(new PurchaseRequestProductItemGetByRequestIdQuery(purchaseRequest.Id));
 
+                    await _mediator.Send(new EditPurchaseRequestCommand()
+                    {
+                        PurchaseRequest = purchaseRequest
+                    });
 
-
-                    foreach(var item in purchaseRequestDTO.PurchaseRequestProductItems)
+                    foreach (var item in purchaseRequestDTO.PurchaseRequestProductItems)
                     {
                         if(purchaseRequestProductItem.Id != item.Id)
                         {
@@ -361,6 +364,7 @@ namespace ProcurementTracker.Infrastructure.Services
                         }
                         else
                         {
+                            purchaseRequestProductItem.Id = item.Id;
                             purchaseRequestProductItem.ProductId = item.ProductId;
                             purchaseRequestProductItem.NumberOfItem = item.NumberOfItem;
                             purchaseRequestProductItem.PurchaseRequestId = purchaseRequest.Id;
@@ -373,10 +377,7 @@ namespace ProcurementTracker.Infrastructure.Services
                         }
                     }
 
-                    await _mediator.Send(new EditPurchaseRequestCommand()
-                    {
-                        PurchaseRequest = purchaseRequest
-                    });
+                   
 
                     response.IsSuccess = true;
                     response.Message = "PurchaseRequest update has been successfull";

@@ -33,7 +33,7 @@ namespace ProcurementTracker.Application.PurchaseRequestsItems.Command
         {
             try
             {
-                await _purchaseRequestProductItemCommandRepository.AddAsync(request.PurchaseRequestProductItem, cancellationToken);
+                await _purchaseRequestProductItemCommandRepository.UpdateAsync(request.PurchaseRequestProductItem, cancellationToken);
             }
             catch (Exception ex)
             {

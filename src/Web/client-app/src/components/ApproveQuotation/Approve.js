@@ -86,26 +86,32 @@ export default class Approve extends Component {
       productId: purchaseRequest.purchaseRequestProductItems[0].productId,
       purchaseRequestStatus: 1,
       requiredDeliveryDate: purchaseRequest.requiredDeliveryDate,
-      description: purchaseRequest.description,
+      description: "test",
       supplierId: purchaseRequest.supplierId,
       totalPrice: totalPrice,
       statusChangedBy: "string",
       purchaseRequestProductItems: [
         {
-          id: 0,
-          productId: productId,
-          productName: "string",
-          numberOfItem: numberOfItem,
+          id: purchaseRequest.purchaseRequestProductItems[0].id,
+          productId: purchaseRequest.purchaseRequestProductItems[0].productId,
+          productName:
+            purchaseRequest.purchaseRequestProductItems[0].productName,
+          numberOfItem:
+            purchaseRequest.purchaseRequestProductItems[0].numberOfItem,
           purchaseRequestId: purchaseRequest.id,
         },
       ],
     };
 
-    console.log(purchaseRequestModel);
-    orderService.saveRequest(purchaseRequestModel).then((response) => {
-      console.log(response.data);
-      localStorage.setItem("purchaseRequest", JSON.stringify(response.data));
-    });
+    orderService
+      .saveRequest(purchaseRequestModel)
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("purchaseRequest", JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        localStorage.setItem("error", JSON.stringify(error.response.data));
+      });
   };
 
   render() {
@@ -120,16 +126,6 @@ export default class Approve extends Component {
           <form onSubmit={this.onSubmit} style={{ backgroundColor: "#bbbec4" }}>
             <div class="row">
               <div class="col">
-                {/* <div class="dropdown"  style={{width:'280px', marginTop:'60px', marginLeft:'230px'  }} >
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Material
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#"> </a>
-    <a class="dropdown-item" href="#"> </a>
-    <a class="dropdown-item" href="#"> </a>
-  </div>
-</div> */}
                 <div
                   style={{
                     width: "560px",
