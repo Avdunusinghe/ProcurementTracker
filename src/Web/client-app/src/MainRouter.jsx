@@ -15,14 +15,21 @@ export default class MainRouter extends Component {
         <div>
           <NavBar />
 
-          <Route path="/approve" exact component={Approve}></Route>
-        </div>
+       
+        <Route path="/approve/:id" exact component={Approve}></Route>
+        
 
         <Route path="/" exact component={Authentication} />
         <Route path="/Order" exact component={Order} />
         <Route path="/quatation" exact component={pendingQuatation} />
         <Route path="/quatationRequests" exact component={QuatationRequests} />
+
+        </div>
       </BrowserRouter>
+       
+     
+      
+      
     );
   }
 }

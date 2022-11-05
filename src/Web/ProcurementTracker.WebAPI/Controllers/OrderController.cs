@@ -38,7 +38,7 @@ namespace ProcurementTracker.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+      //  [Authorize]
         [HttpPost("getOrders")]
         public async Task<IActionResult>GetAllOrders([FromBody] GetAllOrderQueryFilterAsyncCommand getAllOrderQueryFilterAsync)
         {
