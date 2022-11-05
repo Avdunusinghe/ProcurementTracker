@@ -24,6 +24,7 @@ namespace ProcurementTracker.Application.Common.Response.PurchaseRequestDTOs
 
     public class PurchaseRequestProductItemDTO
     {
+        public long Id { get; set; }
         public long ProductId { get; set; }
         public string ProductName { get; set; }
         public int NumberOfItem { get; set; }
