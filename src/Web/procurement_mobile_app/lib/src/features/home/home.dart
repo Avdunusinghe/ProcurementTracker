@@ -5,6 +5,7 @@ import 'package:procurement_mobile_app/src/features/common_dashboard/common_dash
 import 'package:procurement_mobile_app/src/features/order/save.order.screen.dart';
 import 'package:procurement_mobile_app/src/features/procurement_app_theme.dart';
 import 'package:procurement_mobile_app/src/models/tabIcon_data.dart';
+import 'package:procurement_mobile_app/src/quotation/quotation.card.dart';
 
 class AppModuleScreen extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _AppModuleScreenState extends State<AppModuleScreen>
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = AuthenticationScreen(animationController: animationController);
+    tabBody = QuotationCard();
     super.initState();
   }
 
