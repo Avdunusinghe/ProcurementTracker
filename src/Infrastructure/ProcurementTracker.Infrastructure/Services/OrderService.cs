@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ProcurementTracker.Application.Common.Constants;
 using ProcurementTracker.Application.Common.Helper;
 using ProcurementTracker.Application.Common.Interfaces;
 using ProcurementTracker.Application.Common.Response;
@@ -39,7 +40,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     SupplierId = purchaseRequestDTO.SupplierId,
                     TotalPrice = purchaseRequestDTO.TotalPrice,
                     ShippingDate = purchaseRequestDTO.RequiredDeliveryDate,
-                    ShippingAddress = "ABC",
+                    ShippingAddress = ApplicationConstrants.TEMPORY_SITE_NAME,
                     OrderStatus = OrderStatus.Approved,
                     OrderByUserId = _currentUserService.UserId!.Value,
 
@@ -67,12 +68,12 @@ namespace ProcurementTracker.Infrastructure.Services
                 });
 
                 response.IsSuccess = true;
-                response.Message = "PurchaseRequest has been aceepted successfull";
+                response.Message = ApplicationConstrants.PURCHASEREQUEST_ACEPTED_SUCCESS_MESSAGE;
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = "Error has been Occured Please Try again";
+                response.Message = ApplicationConstrants.COMMON_EXCEPTION_MESSAGE;
             }
 
             return response;
@@ -228,7 +229,7 @@ namespace ProcurementTracker.Infrastructure.Services
                         SupplierId = orderDTO.SupplierId,
                         TotalPrice = orderDTO.TotalPrice,
                         ShippingDate = orderDTO.ShippingDate,
-                        ShippingAddress = "ABC",
+                        ShippingAddress = ApplicationConstrants.TEMPORY_SITE_NAME,
                         OrderStatus = orderDTO.OrderStatus,
                         OrderByUserId = 1
 
@@ -255,7 +256,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     });
 
                     response.IsSuccess = true;
-                    response.Message = "Order save has been successfull";
+                    response.Message = ApplicationConstrants.ORDER_SAVE_SUCCESS_MESSAGE;
                 }
                 else
                 {
@@ -263,7 +264,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     order.SupplierId = orderDTO.SupplierId;
                     order.TotalPrice = orderDTO.TotalPrice;
                     order.ShippingDate = orderDTO.ShippingDate;
-                    order.ShippingAddress = "ABC";
+                    order.ShippingAddress = ApplicationConstrants.TEMPORY_SITE_NAME;
                     order.OrderStatus = orderDTO.OrderStatus;
 
                     
@@ -273,7 +274,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     });
 
                     response.IsSuccess = true;
-                    response.Message = "Order update has been successfull";
+                    response.Message = ApplicationConstrants.ORDER_UPDATE_SUCCESS_MESSAGE; ;
                 }
 
                
@@ -281,7 +282,7 @@ namespace ProcurementTracker.Infrastructure.Services
             }catch (Exception ex)
             {
                response.IsSuccess = false;
-               response.Message = "Error has been Occured Please Try again";
+               response.Message = ApplicationConstrants.COMMON_EXCEPTION_MESSAGE; ;
             }
            
              return response;
@@ -329,7 +330,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     });
 
                     response.IsSuccess = true;
-                    response.Message = "PurchaseRequest save has been successfull";
+                    response.Message = ApplicationConstrants.PURCHASEREQUEST_SAVE_SUCCESS_MESSAGE;
                 }
                 else
                 {
@@ -378,7 +379,7 @@ namespace ProcurementTracker.Infrastructure.Services
                     });
 
                     response.IsSuccess = true;
-                    response.Message = "PurchaseRequest update has been successfull";
+                    response.Message = ApplicationConstrants.PURCHASEREQUEST_UPDATE_SUCCESS_MESSAGE;
                 }
 
                
@@ -387,7 +388,7 @@ namespace ProcurementTracker.Infrastructure.Services
             catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = "Error has been Occured Please Try again";
+                response.Message = ApplicationConstrants.COMMON_EXCEPTION_MESSAGE;
             }
 
 
