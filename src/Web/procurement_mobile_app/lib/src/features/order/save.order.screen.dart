@@ -244,7 +244,7 @@ class _SaveOrderScreenState extends State<SaveOrderScreen>
                                     ),
                                   ),
                                   Text(
-                                    "Nov 02, 2022",
+                                    "Nov 06, 2022",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontFamily: ProcurementAppTheme.fontName,
