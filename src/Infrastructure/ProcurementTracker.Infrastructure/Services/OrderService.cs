@@ -305,7 +305,7 @@ namespace ProcurementTracker.Infrastructure.Services
                         SupplierId = purchaseRequestDTO.SupplierId,
                         IsActive = true,
                         TotalPrice = purchaseRequestDTO.TotalPrice,
-                        StatusChangedById = _currentUserService.UserId!.Value
+                        StatusChangedById =1,
 
                     };
 
@@ -397,4 +397,6 @@ namespace ProcurementTracker.Infrastructure.Services
 
 
     }
+
+    
 }
