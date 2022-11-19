@@ -2,7 +2,7 @@
 .Net 6 WebAPI | Entity Framework Core | Microservices | Microsoft SQL | Code First Approach | Clean Architecture | C# | JavaScript | Dart | CQRS | Mediator Pattern | Repository Design Pattern | React | Flutter
 <br/>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/88779731/202841010-92107a2c-8e17-4e81-9a55-20843aafba67.jpg" height="120" />
+  <img src="https://user-images.githubusercontent.com/88779731/202843124-86e8d3a1-d61c-4e9b-aa5c-6a0cce06b4bd.jpg" height="100" />
 </p>
 
 ## Technologies
