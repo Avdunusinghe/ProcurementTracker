@@ -192,62 +192,15 @@ export default class Approve extends Component {
             <br></br>
           </form>
         </div>
-        <div style={{ marginLeft: "550px", marginTop: "20px" }}>
-          <h3 style={{ marginLeft: "40px", marginTop: "10px" }}>
-            <b>Approve Quotation</b>
-          </h3>
-        </div>
-        <form
-          style={{
-            width: "520px",
-            height: "70px",
-            marginLeft: "500px",
-            marginTop: "100px",
-          }}
-        >
-          <div class="form-group">
-            {/* <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/> */}
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">
-              <b>Select Supplier To Approve</b>
-            </label>
-            <select class="form-control">
-              <option>Default select</option>
-              <option>Default select</option>
-              <option>Default select</option>
-              <option>Default select</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlSelect2">
-              <b>Site Address</b>
-            </label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">
-              <b>Remark</b>
-            </label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-            ></textarea>
-          </div>
-
-          <button class="btn btn-primary" type="submit">
-            Submit form
-          </button>
-        </form>
+        <br/>
+        <br/>
+        <div className="text-center">
+        <a
+                        className="btn btn-primary"
+                        href={'/email'}
+                      >
+                        <i className="fas fa-email"> Send Approval</i>
+                      </a></div>
       </div>
     );
   }
